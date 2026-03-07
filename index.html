@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jak w Ulu — Kawiarnia & Cukiernia, Rzeszow</title>
+  <title>Rozkosh — Cukiernia & Kawiarnia, Rzeszów</title>
   <link rel="stylesheet" href="https://use.typekit.net/yov4gbp.css">
   <style>
     /* ===== RESET ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --cream:  #FFF1DE;
-      --pink:   #F4A6CD;
-      --blue:   #B2D5EB;
+      --cream:  #F0EBDE;
+      --pink:   #B60057;
+      --blue:   #284B2B;
       --dark:   #2C1A0E;
       --dark2:  #5A3820;
-      --white:  #F4A6CD;
+      --white:  #B60057;
       --radius: 14px;
     }
 
@@ -32,7 +32,7 @@
       cursor: none;
     }
 
-    /* ===== BEE CURSOR ===== */
+    /* ===== CAKE CURSOR ===== */
     #bee {
       position: fixed;
       top: 0; left: 0;
@@ -66,8 +66,8 @@
       box-shadow: 0 2px 24px rgba(44,26,14,.10);
     }
     nav.scrolled .nav-logo,
-    nav.scrolled .nav-links a { color: #FFF1DE; }
-    nav.scrolled .nav-logo span { color: #FFF1DE; }
+    nav.scrolled .nav-links a { color: #F0EBDE; }
+    nav.scrolled .nav-logo span { color: #F0EBDE; }
     nav.scrolled .nav-links a::after { background: white; }
 
     .nav-logo {
@@ -232,7 +232,7 @@
     }
     .hero-bar-item {
       padding: 10px 28px;
-      background: #F4A6CD;
+      background: #B60057;
       border-radius: 7px;
       border: none;
       font-family: 'bd-supper', sans-serif;
@@ -240,12 +240,14 @@
       font-size: 12px;
       letter-spacing: 2.5px;
       text-transform: uppercase;
-      color: #FFF1DE;
+      color: #F0EBDE;
+      text-decoration: none;
+      display: inline-block;
       transition: background 0.18s ease, transform 0.15s ease;
       cursor: pointer;
     }
     .hero-bar-item:hover {
-      background: #f7bcd9;
+      background: #9a0049;
       transform: translateY(-1px);
     }
 
@@ -273,11 +275,11 @@
       font-size: clamp(38px, 6vw, 82px);
       line-height: 1.0;
       letter-spacing: -2px;
-      color: #F4A6CD;
+      color: #B60057;
       opacity: 0;
       animation: fadeUp .8s .25s forwards;
     }
-    .hero-title em { font-style: normal; color: #B2D5EB; }
+    .hero-title em { font-style: normal; color: #284B2B; }
 
     .hero-sub {
       font-size: clamp(15px, 1.6vw, 18px);
@@ -419,16 +421,16 @@
       font-family: 'bd-supper', sans-serif;
       font-weight: 700;
       font-size: 30px;
-      color: #FFF1DE;
+      color: #F0EBDE;
     }
-    .stat:nth-child(3) .stat-num { color: var(--dark); }
+    .stat:nth-child(3) .stat-num { color: #F0EBDE; }
     .stat-label {
       font-size: 12px;
-      color: #FFF1DE;
+      color: #F0EBDE;
       opacity: .88;
       margin-top: 4px;
     }
-    .stat:nth-child(3) .stat-label { color: var(--dark); opacity: .7; }
+    .stat:nth-child(3) .stat-label { color: #F0EBDE; opacity: .88; }
 
     .onas-img-wrap {
       position: relative;
@@ -469,7 +471,7 @@
       margin: 0 auto;
     }
     .menu-wrap .sec-label { color: rgba(255,241,222,.8); }
-    .menu-wrap .sec-title { color: #FFF1DE; text-align: center; }
+    .menu-wrap .sec-title { color: #F0EBDE; text-align: center; }
 
     .menu-group {
       display: grid;
@@ -514,7 +516,7 @@
       font-size: 13px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: #FFF1DE;
+      color: #F0EBDE;
     }
 
     .acc-icon {
@@ -522,7 +524,7 @@
       border: 1.5px solid rgba(255,255,255,.7);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      color: #FFF1DE;
+      color: #F0EBDE;
       font-size: 18px;
       line-height: 0;
       font-family: Arial, sans-serif;
@@ -533,7 +535,7 @@
       transform: rotate(45deg);
       background: white;
       color: var(--pink);
-      border-color: #FFF1DE;
+      border-color: #F0EBDE;
     }
 
     .acc-body {
@@ -555,7 +557,7 @@
 
     .menu-name {
       font-size: 15px;
-      color: #FFF1DE;
+      color: #F0EBDE;
       line-height: 1.4;
     }
     .menu-name small {
@@ -569,7 +571,7 @@
       font-family: 'bd-supper', sans-serif;
       font-weight: 700;
       font-size: 15px;
-      color: #FFF1DE;
+      color: #F0EBDE;
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -656,7 +658,7 @@
       position: absolute;
       top: 20px; right: 28px;
       font-size: 38px;
-      color: #FFF1DE;
+      color: #F0EBDE;
       background: none;
       border: none;
       cursor: pointer;
@@ -721,7 +723,7 @@
       margin: 0 auto;
     }
     .kontakt-wrap .sec-label { color: rgba(255,241,222,.8); }
-    .kontakt-wrap .sec-title { color: #FFF1DE; }
+    .kontakt-wrap .sec-title { color: #F0EBDE; }
 
     .gal-wrap .sec-label { color: var(--cream); opacity: .7; }
     .gal-wrap .sec-title { color: var(--cream); }
@@ -814,11 +816,11 @@
 
     .k-value {
       font-size: 18px;
-      color: #FFF1DE;
+      color: #F0EBDE;
       line-height: 1.55;
     }
     .k-value a {
-      color: #FFF1DE;
+      color: #F0EBDE;
       text-decoration: none;
     }
     .k-value a:hover { text-decoration: underline; }
@@ -833,7 +835,7 @@
       align-items: center;
       gap: 8px;
       background: white;
-      color: var(--dark);
+      color: #284B2B;
       font-family: 'bd-supper', sans-serif;
       font-weight: 700;
       font-size: 12px;
@@ -844,7 +846,7 @@
       text-decoration: none;
       transition: background .2s, color .2s;
     }
-    .social-pill:hover { background: var(--dark); color: #FFF1DE; }
+    .social-pill:hover { background: #284B2B; color: #F0EBDE; }
 
     .hours-list { list-style: none; }
     .hours-list li {
@@ -853,7 +855,7 @@
       padding: 8px 0;
       border-bottom: 1px solid rgba(255,255,255,.2);
       font-size: 15px;
-      color: #FFF1DE;
+      color: #F0EBDE;
     }
     .hours-list li:last-child { border-bottom: none; }
     .hours-list .day { opacity: .8; }
@@ -885,7 +887,7 @@
       font-size: 11px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: rgba(44,26,14,.45);
+      color: rgba(40,75,43,.45);
       display: flex;
       align-items: center;
       gap: 14px;
@@ -896,7 +898,7 @@
       content: '';
       flex: 1;
       height: 1px;
-      background: rgba(44,26,14,.15);
+      background: rgba(40,75,43,.15);
     }
 
     .form-heading {
@@ -905,7 +907,7 @@
       font-size: clamp(28px, 4vw, 48px);
       line-height: 1.05;
       letter-spacing: -1.5px;
-      color: var(--dark);
+      color: #284B2B;
       margin-bottom: 12px;
     }
     .form-heading em {
@@ -917,7 +919,7 @@
       font-family: 'sofia-pro', sans-serif;
       font-size: 15px;
       line-height: 1.7;
-      color: rgba(44,26,14,.6);
+      color: rgba(40,75,43,.6);
       margin-bottom: 36px;
       max-width: 480px;
     }
@@ -942,16 +944,16 @@
       font-weight: 700;
       letter-spacing: 2.5px;
       text-transform: uppercase;
-      color: rgba(44,26,14,.5);
+      color: rgba(40,75,43,.5);
     }
 
     .form-input,
     .form-textarea {
       font-family: 'sofia-pro', sans-serif;
       font-size: 15px;
-      color: var(--dark);
+      color: #284B2B;
       background: rgba(255,255,255,.75);
-      border: 1.5px solid rgba(44,26,14,.12);
+      border: 1.5px solid rgba(40,75,43,.12);
       border-radius: 8px;
       padding: 14px 18px;
       outline: none;
@@ -961,12 +963,12 @@
     }
     .form-input::placeholder,
     .form-textarea::placeholder {
-      color: rgba(44,26,14,.3);
+      color: rgba(40,75,43,.3);
     }
     .form-input:focus,
     .form-textarea:focus {
       border-color: var(--pink);
-      box-shadow: 0 0 0 3px rgba(244,166,205,.25);
+      box-shadow: 0 0 0 3px rgba(182,0,87,.18);
     }
 
     .form-textarea {
@@ -980,7 +982,7 @@
       width: 100%;
       margin-top: 24px;
       padding: 17px 24px;
-      background: var(--dark);
+      background: #284B2B;
       color: var(--cream);
       font-family: 'bd-supper', sans-serif;
       font-weight: 700;
@@ -993,7 +995,7 @@
       transition: background .2s, transform .15s ease;
     }
     .form-submit:hover {
-      background: #3d2510;
+      background: #1c3520;
       transform: translateY(-1px);
     }
     .form-submit:active { transform: translateY(0); }
@@ -1005,7 +1007,7 @@
 
     /* ===== FOOTER ===== */
     footer {
-      background: var(--dark);
+      background: #284B2B;
       color: var(--cream);
       padding: 52px 64px;
       display: flex;
@@ -1046,6 +1048,8 @@
       nav.scrolled { padding: 12px 24px; }
       section { padding: 70px 24px; }
       .onas-img-wrap { display: none; }
+      .hero-panel:nth-child(3), .hero-panel:nth-child(4) { display: none; }
+      .hero-panel { flex: 1 !important; }
 
 
       nav { justify-content: space-between; gap: 0; }
@@ -1054,8 +1058,8 @@
       .nav-logo { color: var(--cream); }
       .nav-logo span { color: var(--cream); }
       .nav-burger span { background: var(--cream); }
-      nav.scrolled .nav-logo { color: #FFF1DE; }
-      nav.scrolled .nav-logo span { color: #FFF1DE; }
+      nav.scrolled .nav-logo { color: #F0EBDE; }
+      nav.scrolled .nav-logo span { color: #F0EBDE; }
       nav.scrolled .nav-burger span { background: var(--cream); }
 
       .onas-grid { grid-template-columns: 1fr; }
@@ -1065,7 +1069,7 @@
       .menu-group { grid-template-columns: 1fr; }
       .menu-group-label { padding-top: 0; margin-bottom: 10px; }
 
-      .masonry { columns: 4; }
+      .masonry { columns: 2; }
       .opinie-grid { grid-template-columns: 1fr; }
       .kontakt-grid { grid-template-columns: 1fr; }
 
@@ -1092,12 +1096,12 @@
 </head>
 <body>
 
-<!-- BEE -->
-<div id="bee">🐝</div>
+<!-- CAKE CURSOR -->
+<div id="bee">🎂</div>
 
 <!-- NAV -->
 <nav id="navbar">
-  <a href="#hero" class="nav-logo">Jak w <span>Ulu</span></a>
+  <a href="#hero" class="nav-logo">Roz<span>kosh</span></a>
   <div class="nav-burger" id="burger" aria-label="Menu">
     <span></span><span></span><span></span>
   </div>
@@ -1125,26 +1129,25 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-img-wrap">
-    <div class="hero-panel" style="flex:1.2; background-image:url('./kontekst_do_strony/hero1.png')"></div>
-    <div class="hero-panel" style="flex:1.0; background-image:url('./kontekst_do_strony/hero2.png')"></div>
-    <div class="hero-panel" style="flex:1.3; background-image:url('./kontekst_do_strony/hero3.png')"></div>
-    <div class="hero-panel" style="flex:0.9; background-image:url('./kontekst_do_strony/hero4.png')"></div>
+    <div class="hero-panel" style="flex:1.2; background-image:url('./kontekst_do_strony/tort rozkosh 8.png')"></div>
+    <div class="hero-panel" style="flex:1.0; background-image:url('./kontekst_do_strony/tort rozkosh 10.png')"></div>
+    <div class="hero-panel" style="flex:1.3; background-image:url('./kontekst_do_strony/tort rozkosh 12.png')"></div>
+    <div class="hero-panel" style="flex:0.9; background-image:url('./kontekst_do_strony/tort rozkosh 112.png')"></div>
     <div class="hero-bar">
-      <span class="hero-bar-item">Drozdzowki</span>
-      <span class="hero-bar-item">Kawa</span>
-      <span class="hero-bar-item">Sniadania</span>
-      <span class="hero-bar-item">Torty</span>
+      <a href="#menu" class="hero-bar-item">Kawy</a>
+      <a href="#menu" class="hero-bar-item">Herbaty</a>
+      <a href="#menu" class="hero-bar-item">Torty</a>
     </div>
   </div>
   <div class="hero-text-block">
-    <p class="hero-eyebrow">Kawiarnia &amp; Cukiernia · Rzeszow</p>
-    <h1 class="hero-title">Czesc!<br>Jestesmy <em>Jak w Ulu!</em></h1>
-    <p class="hero-sub">Najslodsze miejsce w Rzeszowie. Otwarte 7 dni w tygodniu.</p>
+    <p class="hero-eyebrow">Cukiernia &amp; Kawiarnia · Rzeszów</p>
+    <h1 class="hero-title">Witaj<br>w <em>Rozkosh!</em></h1>
+    <p class="hero-sub">Torty na zamówienie i wyjątkowe kawy. Środa – niedziela, od 9:00.</p>
     <div class="hero-socials">
-      <a href="https://www.facebook.com/jakwulucafe/?locale=pl_PL" class="hero-social-link" target="_blank" rel="noopener">
+      <a href="https://www.facebook.com/rozkosh.cukiernia" class="hero-social-link" target="_blank" rel="noopener">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.269h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
       </a>
-      <a href="https://www.instagram.com/jak_w_ulu" class="hero-social-link" target="_blank" rel="noopener">
+      <a href="https://www.instagram.com/rozkosh.cukiernia/" class="hero-social-link" target="_blank" rel="noopener">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
       </a>
     </div>
@@ -1158,25 +1161,25 @@
     <div class="onas-text">
       <div class="sec-label" data-reveal="up">O nas</div>
       <h2 data-reveal="up" data-delay="90">Slodkie miejsce<br>w sercu <em>Rzeszowa</em></h2>
-      <p data-reveal="up" data-delay="170">Jestesmy mala kawiarnia i cukiernia przy ulicy Strazackiej 27F. Tworzymy miejsce, gdzie mozna sie zatrzymac, zwolnic i poczuc jak w domu — albo jak w ulu, pelnym ciepla i slodkosci.</p>
-      <p data-reveal="up" data-delay="230">Nasze drozdzowki, torty i sniadania przygotowujemy codziennie ze swiezych skladnikow. Kawe parzymy z ziaren od lokalnych palarni. Dbamy o kazdy szczegol, zebys chcial wracac.</p>
+      <p data-reveal="up" data-delay="170">Jestesmy cukiernia i kawiarnia przy ulicy Strzelniczej 12e/2. Tworzymy miejsce, gdzie mozna sie zatrzymac, zwolnic i zasmakować w czymś wyjątkowym.</p>
+      <p data-reveal="up" data-delay="230">Nasze torty przygotowujemy na zamówienie ze świeżych składników. Kawe parzymy starannie, a w zimne dni czeka na ciebie gorąca czekolada i matcha. Dbamy o każdy szczegół.</p>
       <div class="onas-stats" data-reveal="up" data-delay="310">
         <div class="stat">
-          <span class="stat-num">🐝</span>
-          <span class="stat-label">Kazdy dzien</span>
+          <span class="stat-num">🎂</span>
+          <span class="stat-label">Na zamówienie</span>
         </div>
         <div class="stat">
           <span class="stat-num">100%</span>
-          <span class="stat-label">Swieze wypieki</span>
+          <span class="stat-label">Swieze skladniki</span>
         </div>
         <div class="stat">
-          <span class="stat-num">7</span>
-          <span class="stat-label">Dni w tygodniu</span>
+          <span class="stat-num">5</span>
+          <span class="stat-label">Dni otwarcia</span>
         </div>
       </div>
     </div>
     <div class="onas-img-wrap">
-      <img src="./kontekst_do_strony/tort onas.png" alt="Tort Jak w Ulu">
+      <img src="./kontekst_do_strony/tort rozkosh 5.png" alt="Tort Rozkosh">
     </div>
   </div>
 </section>
@@ -1187,114 +1190,113 @@
     <div class="sec-label" style="text-align:center" data-reveal="up">Co podajemy</div>
     <div class="sec-title" data-reveal="up" data-delay="80">Menu</div>
 
-    <!-- SNIADANIA -->
-    <div class="menu-group" data-reveal="up" data-delay="160">
-      <div class="menu-group-label"><span>Sniadania</span></div>
+    <!-- KAWY -->
+    <div class="menu-group" data-reveal="up" data-delay="80">
+      <div class="menu-group-label"><span>Kawy</span></div>
       <div class="acc-list">
 
         <div class="acc-item">
-          <div class="acc-head"><h3>Jajecznica</h3><div class="acc-icon">+</div></div>
+          <div class="acc-head"><h3>Kawy klasyczne</h3><div class="acc-icon">+</div></div>
           <div class="acc-body"><div class="acc-body-inner">
-            <div class="menu-row"><span class="menu-name">Klasyczna na masle</span><span class="menu-price">26 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Na szynce / boczku</span><span class="menu-price">30 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Z dodatkami</span><span class="menu-price">34 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Szakszuka z chorizo</span><span class="menu-price">34 zl</span></div>
+            <div class="menu-row"><span class="menu-name">Espresso</span><span class="menu-price">8 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Espresso doppio</span><span class="menu-price">10 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Americano</span><span class="menu-price">10 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Przelew</span><span class="menu-price">10 / 12 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Flat white</span><span class="menu-price">12 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Caffe latte</span><span class="menu-price">12 / 14 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Cappuccino</span><span class="menu-price">12 / 14 zł</span></div>
           </div></div>
         </div>
 
         <div class="acc-item">
-          <div class="acc-head"><h3>Nalesniki</h3><div class="acc-icon">+</div></div>
+          <div class="acc-head"><h3>Kawy zimowe</h3><div class="acc-icon">+</div></div>
           <div class="acc-body"><div class="acc-body-inner">
-            <div class="menu-row"><span class="menu-name">Z serkiem</span><span class="menu-price">34 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Z nutella</span><span class="menu-price">30 zl</span></div>
+            <div class="menu-row"><span class="menu-name">Pumpkin spice latte</span><span class="menu-price">18 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Mokka klasyczna / wiśniowa</span><span class="menu-price">18 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Caffe latte cynamonowe</span><span class="menu-price">16 zł</span></div>
           </div></div>
         </div>
 
         <div class="acc-item">
-          <div class="acc-head"><h3>Bajgle</h3><div class="acc-icon">+</div></div>
+          <div class="acc-head"><h3>Matcha</h3><div class="acc-icon">+</div></div>
           <div class="acc-body"><div class="acc-body-inner">
-            <div class="menu-row"><span class="menu-name">Sniadaniowy</span><span class="menu-price">31 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Z lososiem</span><span class="menu-price">31 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Z szynka parmenska</span><span class="menu-price">31 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Z jajecznica i bekonem</span><span class="menu-price">31 zl</span></div>
+            <div class="menu-row"><span class="menu-name">Matcha latte</span><span class="menu-price">15 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Matcha latte różana</span><span class="menu-price">17 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Matcha latte cynamonowa</span><span class="menu-price">18 zł</span></div>
           </div></div>
         </div>
 
         <div class="acc-item">
-          <div class="acc-head"><h3>Tosty XXL</h3><div class="acc-icon">+</div></div>
+          <div class="acc-head"><h3>Goraca czekolada</h3><div class="acc-icon">+</div></div>
           <div class="acc-body"><div class="acc-body-inner">
-            <div class="menu-row"><span class="menu-name">Klasyczne</span><span class="menu-price">28 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Z camembertem</span><span class="menu-price">26 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Na slodko</span><span class="menu-price">26 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Z chorizo</span><span class="menu-price">30 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Pajda z awokado</span><span class="menu-price">34 zl</span></div>
-          </div></div>
-        </div>
-
-        <div class="acc-item">
-          <div class="acc-head"><h3>Na Slodko</h3><div class="acc-icon">+</div></div>
-          <div class="acc-body"><div class="acc-body-inner">
-            <div class="menu-row"><span class="menu-name">Slodka owsianka</span><span class="menu-price">24 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Skyrniczki</span><span class="menu-price">36 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Pancakes</span><span class="menu-price">32 zl</span></div>
-          </div></div>
-        </div>
-
-        <div class="acc-item">
-          <div class="acc-head"><h3>Dobry Talerz</h3><div class="acc-icon">+</div></div>
-          <div class="acc-body"><div class="acc-body-inner">
-            <div class="menu-row"><span class="menu-name">Francuski</span><span class="menu-price">34 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Swojski</span><span class="menu-price">36 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Angielski</span><span class="menu-price">40 zl</span></div>
+            <div class="menu-row"><span class="menu-name">Klasyczna</span><span class="menu-price">14 / 16 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Wiśniowa</span><span class="menu-price">16 / 18 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Pomarańczowa</span><span class="menu-price">16 / 18 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Kakao</span><span class="menu-price">10 / 12 zł</span></div>
           </div></div>
         </div>
 
       </div><!-- /.acc-list -->
     </div><!-- /.menu-group -->
 
-    <!-- NAPOJE -->
+    <!-- HERBATY -->
     <div class="menu-group" data-reveal="up" data-delay="80">
-      <div class="menu-group-label"><span>Napoje</span></div>
+      <div class="menu-group-label"><span>Herbaty</span></div>
       <div class="acc-list">
 
         <div class="acc-item">
-          <div class="acc-head"><h3>Kawa</h3><div class="acc-icon">+</div></div>
+          <div class="acc-head"><h3>Herbaty klasyczne</h3><div class="acc-icon">+</div></div>
           <div class="acc-body"><div class="acc-body-inner">
-            <div class="menu-row"><span class="menu-name">Espresso macchiato</span><span class="menu-price">9 / 11 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Americano</span><span class="menu-price">10 / 13 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Cappucino</span><span class="menu-price">10 / 12 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Latte</span><span class="menu-price">12 / 14 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Flat white</span><span class="menu-price">14 / 15 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Mleko do kawy</span><span class="menu-price">15 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Mleko roslinne <small>dodatek</small></span><span class="menu-price">+2 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Syrop <small>dodatek</small></span><span class="menu-price">+3 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Bezkofeinowa <small>dodatek</small></span><span class="menu-price">+2 zl</span></div>
+            <div class="menu-row"><span class="menu-name">Czarna · Earl Grey · Zielona<br>Rooibos · Smakowa · Ziołowa</span><span class="menu-price">10 / 12 zł</span></div>
           </div></div>
         </div>
 
         <div class="acc-item">
-          <div class="acc-head"><h3>Kawa Mrozona</h3><div class="acc-icon">+</div></div>
+          <div class="acc-head"><h3>Herbaty zimowe</h3><div class="acc-icon">+</div></div>
           <div class="acc-body"><div class="acc-body-inner">
-            <div class="menu-row"><span class="menu-name">Iced latte</span><span class="menu-price">16 / 18 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Iced latte pistacja</span><span class="menu-price">18 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Iced latte karmel</span><span class="menu-price">19 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Cafe freddo</span><span class="menu-price">18 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Espresso tonic</span><span class="menu-price">13 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Espresso orange</span><span class="menu-price">17 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Affogato</span><span class="menu-price">18 zl</span></div>
+            <div class="menu-row">
+              <span class="menu-name">Korzenna<small>herbata czarna, cytryna, miód, imbir, cynamon, goździki, kardamon, anyż</small></span>
+              <span class="menu-price">18 zł</span>
+            </div>
+            <div class="menu-row">
+              <span class="menu-name">Żurawinowa<small>herbata czarna, cytryna, miód, żurawina, cynamon</small></span>
+              <span class="menu-price">18 zł</span>
+            </div>
+            <div class="menu-row">
+              <span class="menu-name">Imbirowa z miętą<small>herbata czarna, cytryna, miód, imbir, mięta</small></span>
+              <span class="menu-price">18 zł</span>
+            </div>
+          </div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- INNE -->
+    <div class="menu-group" data-reveal="up" data-delay="80">
+      <div class="menu-group-label"><span>Inne</span></div>
+      <div class="acc-list">
+
+        <div class="acc-item">
+          <div class="acc-head"><h3>Soki tloczone</h3><div class="acc-icon">+</div></div>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="menu-row"><span class="menu-name">Sok tłoczony</span><span class="menu-price">8 zł</span></div>
           </div></div>
         </div>
 
         <div class="acc-item">
-          <div class="acc-head"><h3>Herbata</h3><div class="acc-icon">+</div></div>
+          <div class="acc-head"><h3>Dodatki</h3><div class="acc-icon">+</div></div>
           <div class="acc-body"><div class="acc-body-inner">
-            <div class="menu-row"><span class="menu-name">Earl grey</span><span class="menu-price">12 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Zielona</span><span class="menu-price">12 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Jasminowa</span><span class="menu-price">12 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Owocowa</span><span class="menu-price">12 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Czerwona Pu-erh</span><span class="menu-price">12 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Sezonowa</span><span class="menu-price">18 zl</span></div>
-            <div class="menu-row"><span class="menu-name">Z rozkwitajacym kwiatem</span><span class="menu-price">21 zl</span></div>
+            <div class="menu-row"><span class="menu-name">Mleko bez laktozy</span><span class="menu-price">+ 1 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Napój roślinny</span><span class="menu-price">+ 2 zł</span></div>
+            <div class="menu-row"><span class="menu-name">Syrop</span><span class="menu-price">+ 2 zł</span></div>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <div class="acc-head"><h3>Torty na zamowienie</h3><div class="acc-icon">+</div></div>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="menu-row"><span class="menu-name">Skontaktuj się z nami, aby zamówić tort. Przygotowujemy torty ze świeżych składników — każdy projekt indywidualnie.</span><span class="menu-price"></span></div>
           </div></div>
         </div>
 
@@ -1310,31 +1312,19 @@
     <div class="sec-label" data-reveal="up">Nasze wypieki</div>
     <div class="sec-title" data-reveal="up" data-delay="80">Galeria</div>
 
-    <div class="gal-filters" data-reveal="up" data-delay="160">
-      <button class="gal-btn active" data-filter="all">Wszystkie</button>
-      <button class="gal-btn" data-filter="drozdzowki">Drozdzowki</button>
-      <button class="gal-btn" data-filter="tort">Torty</button>
-      <button class="gal-btn" data-filter="sniadanie">Sniadania</button>
-      <button class="gal-btn" data-filter="paczki">Paczki</button>
-    </div>
-
-    <div class="masonry" id="masonry" data-reveal="up" data-delay="240">
-      <div class="mas-item" data-cat="drozdzowki"><img src="./kontekst_do_strony/drozdzowki 1.png" alt="Drozdzowki" loading="lazy"></div>
-      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/jak w ulu tort.png" alt="Tort" loading="lazy"></div>
-      <div class="mas-item" data-cat="sniadanie"><img src="./kontekst_do_strony/jak w ulu sniadanie 1.png" alt="Sniadanie" loading="lazy"></div>
-      <div class="mas-item" data-cat="paczki"><img src="./kontekst_do_strony/paczek 1.png" alt="Paczki" loading="lazy"></div>
-      <div class="mas-item" data-cat="drozdzowki"><img src="./kontekst_do_strony/drozdzowki 2.png" alt="Drozdzowki" loading="lazy"></div>
-      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/jak w ulu tort 1.png" alt="Tort" loading="lazy"></div>
-      <div class="mas-item" data-cat="sniadanie"><img src="./kontekst_do_strony/sniadanie 2.png" alt="Sniadanie" loading="lazy"></div>
-      <div class="mas-item" data-cat="paczki"><img src="./kontekst_do_strony/paczki 2.png" alt="Paczki" loading="lazy"></div>
-      <div class="mas-item" data-cat="drozdzowki"><img src="./kontekst_do_strony/drozdzowki 3.png" alt="Drozdzowki" loading="lazy"></div>
-      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/jak w ulu tort 2.png" alt="Tort" loading="lazy"></div>
-      <div class="mas-item" data-cat="sniadanie"><img src="./kontekst_do_strony/sniadanie 3.png" alt="Sniadanie" loading="lazy"></div>
-      <div class="mas-item" data-cat="paczki"><img src="./kontekst_do_strony/paczki 3.png" alt="Paczki" loading="lazy"></div>
-      <div class="mas-item" data-cat="drozdzowki"><img src="./kontekst_do_strony/drozdzowki 4.png" alt="Drozdzowki" loading="lazy"></div>
-      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/jak w ulu tort 4.png" alt="Tort" loading="lazy"></div>
-      <div class="mas-item" data-cat="sniadanie"><img src="./kontekst_do_strony/sniadanie 4.png" alt="Sniadanie" loading="lazy"></div>
-      <div class="mas-item" data-cat="paczki"><img src="./kontekst_do_strony/paczki 4.png" alt="Paczki" loading="lazy"></div>
+    <div class="masonry" id="masonry" data-reveal="up" data-delay="160">
+      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/tort rozkosh.png" alt="Tort Rozkosh" loading="lazy"></div>
+      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/tort rozkosh 2.png" alt="Tort Rozkosh" loading="lazy"></div>
+      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/tort rozkosh 3.png" alt="Tort Rozkosh" loading="lazy"></div>
+      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/tort rozkosh 4.png" alt="Tort Rozkosh" loading="lazy"></div>
+      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/tort rozkosh 5.png" alt="Tort Rozkosh" loading="lazy"></div>
+      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/tort rozkosh 6.png" alt="Tort Rozkosh" loading="lazy"></div>
+      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/tort rozkosh7.png" alt="Tort Rozkosh" loading="lazy"></div>
+      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/tort rozkosh 8.png" alt="Tort Rozkosh" loading="lazy"></div>
+      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/tort rozkosh 9.png" alt="Tort Rozkosh" loading="lazy"></div>
+      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/tort rozkosh 10.png" alt="Tort Rozkosh" loading="lazy"></div>
+      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/tort rozkosh 112.png" alt="Tort Rozkosh" loading="lazy"></div>
+      <div class="mas-item" data-cat="tort"><img src="./kontekst_do_strony/tort rozkosh 12.png" alt="Tort Rozkosh" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -1349,11 +1339,11 @@
 
       <div class="faq-item" data-reveal="up" data-delay="0">
         <div class="faq-head">
-          <p class="faq-question">Czy mozna u was zjesc sniadanie?</p>
+          <p class="faq-question">Czy można zamówić tort na specjalne okazje?</p>
           <div class="faq-icon">+</div>
         </div>
         <div class="faq-body"><div class="faq-body-inner">
-          Tak! Sniadania serwujemy codziennie od otwarcia do godziny 13:00. W ofercie znajdziesz jajecznice, nalesniki, bajgle i inne cieple propozycje.
+          Tak! Tworzymy torty na wszelkie okazje — urodziny, rocznice, wesela i nie tylko. Każdy tort przygotowujemy indywidualnie ze świeżych składników. Skontaktuj się z nami minimum 3–5 dni wcześniej.
         </div></div>
       </div>
 
@@ -1383,7 +1373,7 @@
           <div class="faq-icon">+</div>
         </div>
         <div class="faq-body"><div class="faq-body-inner">
-          Jestesmy otwarci od poniedzialku do piatku w godzinach 8:00–18:00, w soboty 9:00–17:00, a w niedziele 10:00–15:00.
+          Jesteśmy otwarci od środy do piątku w godzinach 9:00–18:00, w soboty i niedziele 10:00–19:00. W poniedziałek i wtorek jesteśmy nieczynni.
         </div></div>
       </div>
 
@@ -1464,38 +1454,42 @@
       <div>
         <div class="k-block" data-reveal="up" data-delay="0">
           <div class="k-label">Adres</div>
-          <div class="k-value">Strazacka 27F<br>Rzeszow 35-312</div>
+          <div class="k-value">ul. Strzelnicza 12e/2<br>35-103 Rzeszów</div>
         </div>
         <div class="k-block" data-reveal="up" data-delay="100">
           <div class="k-label">Telefon</div>
-          <div class="k-value"><a href="tel:577960842">577 960 842</a></div>
+          <div class="k-value"><a href="tel:+48730252750">+48 730 252 750</a></div>
+        </div>
+        <div class="k-block" data-reveal="up" data-delay="150">
+          <div class="k-label">E-mail</div>
+          <div class="k-value"><a href="mailto:kontakt@cukierniarozkosh.pl">kontakt@cukierniarozkosh.pl</a></div>
         </div>
         <div class="k-block" data-reveal="up" data-delay="200">
           <div class="k-label">Social media</div>
           <div class="socials">
-            <a href="https://www.facebook.com/jakwulucafe/?locale=pl_PL" class="social-pill" target="_blank" rel="noopener">Facebook</a>
-            <a href="https://www.instagram.com/jak_w_ulu" class="social-pill" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://www.facebook.com/rozkosh.cukiernia" class="social-pill" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://www.instagram.com/rozkosh.cukiernia/" class="social-pill" target="_blank" rel="noopener">Instagram</a>
           </div>
         </div>
         <div class="k-block" data-reveal="up" data-delay="300">
           <div class="k-label">Godziny otwarcia</div>
           <ul class="hours-list">
-            <li><span class="day">Poniedzialek</span><span class="time">09:00–22:00</span></li>
-            <li><span class="day">Wtorek</span><span class="time">09:00–22:00</span></li>
-            <li><span class="day">Sroda</span><span class="time">09:00–23:00</span></li>
-            <li><span class="day">Czwartek</span><span class="time">09:00–23:00</span></li>
-            <li><span class="day">Piatek</span><span class="time">09:00–01:00</span></li>
-            <li><span class="day">Sobota</span><span class="time">10:00–01:00</span></li>
-            <li><span class="day">Niedziela</span><span class="time">10:00–22:00</span></li>
+            <li><span class="day">Poniedziałek</span><span class="time">Nieczynne</span></li>
+            <li><span class="day">Wtorek</span><span class="time">Nieczynne</span></li>
+            <li><span class="day">Środa</span><span class="time">09:00–18:00</span></li>
+            <li><span class="day">Czwartek</span><span class="time">09:00–18:00</span></li>
+            <li><span class="day">Piątek</span><span class="time">09:00–18:00</span></li>
+            <li><span class="day">Sobota</span><span class="time">10:00–19:00</span></li>
+            <li><span class="day">Niedziela</span><span class="time">10:00–19:00</span></li>
           </ul>
         </div>
       </div>
       <div class="map-wrap" data-reveal="right">
         <iframe
-          src="https://maps.google.com/maps?q=Stra%C5%BCacka+27F+Rzesz%C3%B3w&output=embed&hl=pl&z=16"
+          src="https://maps.google.com/maps?q=ul.+Strzelnicza+12e%2F2+Rzesz%C3%B3w&output=embed&hl=pl&z=16"
           allowfullscreen=""
           loading="lazy"
-          title="Mapa - Jak w Ulu">
+          title="Mapa - Rozkosh">
         </iframe>
       </div>
     </div>
@@ -1506,8 +1500,8 @@
       <p class="form-desc">Masz pytanie, sugestie lub chcesz zarezerwowac miejsce? Napisz — odpowiadamy w ciagu jednego dnia roboczego.</p>
       <form id="kontaktForm" action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="access_key" value="79f22523-eb0a-4633-918c-3d687b604f17">
-        <input type="hidden" name="subject" value="Nowa wiadomosc ze strony Jak w Ulu">
-        <input type="hidden" name="from_name" value="Jak w Ulu – formularz kontaktowy">
+        <input type="hidden" name="subject" value="Nowa wiadomosc ze strony Rozkosh">
+        <input type="hidden" name="from_name" value="Rozkosh – formularz kontaktowy">
         <input type="checkbox" name="botcheck" style="display:none">
         <div class="form-row">
           <div class="form-field">
@@ -1536,13 +1530,13 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="foot-logo">Jak w <span>Ulu</span></div>
-  <p class="foot-text">© 2026 Jak w Ulu · Kawiarnia &amp; Cukiernia</p>
-  <p class="foot-text">Strazacka 27F, Rzeszow · 577 960 842</p>
+  <div class="foot-logo">Roz<span>kosh</span></div>
+  <p class="foot-text">© 2026 Rozkosh · Cukiernia &amp; Kawiarnia</p>
+  <p class="foot-text">ul. Strzelnicza 12e/2, Rzeszów · +48 730 252 750</p>
 </footer>
 
 <script>
-/* ===== BEE ===== */
+/* ===== CAKE CURSOR ===== */
 const bee = document.getElementById('bee');
 let bx = innerWidth/2, by = innerHeight/2, mx = bx, my = by;
 const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
