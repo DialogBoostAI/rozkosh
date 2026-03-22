@@ -1995,16 +1995,6 @@ window.addEventListener('preloader:done', function startHeroAnimations() {
     delay: 1.3,
   });
 
-  /* ── 7. Btn fades on scroll ── */
-  gsap.to(btn, {
-    opacity: 0.15,
-    scrollTrigger: {
-      trigger: '#hero',
-      start: 'center top',
-      end: 'bottom top',
-      scrub: true,
-    }
-  });
 
   /* ── 8. Mouse parallax on panel backgrounds ── */
   const maxPx = 15;
