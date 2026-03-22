@@ -1711,33 +1711,49 @@ import { motion, AnimatePresence } from 'framer-motion';
 import htm from 'htm';
 const html = htm.bind(React.createElement);
 
-const BG        = '#306048';
-const SPRING    = { type: 'spring', damping: 25, stiffness: 120 };
-const STAGGER   = 0.15;
+const BG      = '#306048';
+const STAGGER = 0.15;
+// Miękkie odbicie — "kładzenie na stole"
+const SPRING  = { type: 'spring', damping: 20, stiffness: 180, mass: 0.8 };
 
+// Wszystkie 12 zdjęć z galerii
 const IMAGES = [
   './kontekst_do_strony/tort rozkosh.png',
   './kontekst_do_strony/tort rozkosh 2.png',
   './kontekst_do_strony/tort rozkosh 3.png',
+  './kontekst_do_strony/tort rozkosh 4.png',
   './kontekst_do_strony/tort rozkosh 5.png',
   './kontekst_do_strony/tort rozkosh 6.png',
+  './kontekst_do_strony/tort rozkosh7.png',
   './kontekst_do_strony/tort rozkosh 8.png',
   './kontekst_do_strony/tort rozkosh 9.png',
+  './kontekst_do_strony/tort rozkosh 10.png',
+  './kontekst_do_strony/tort rozkosh 112.png',
   './kontekst_do_strony/tort rozkosh 12.png',
 ];
 
 const LOGO = './kontekst_do_strony/rozkosh logo.png';
 
-// Asymmetric collage positions (mobile-first, absolute)
+// 12 pozycji pokrywających cały ekran — efekt "zasypywania" zdjęciami
+// Mieszanka rozmiarów: duże (45-55%), średnie (30-38%), małe (20-26%)
 const LAYOUT = [
-  { top: '2%',  left: '-4%',  right: undefined, width: '56%', rotate: -7  },
-  { top: '4%',  left: undefined, right: '-3%',  width: '52%', rotate:  5  },
-  { top: '21%', left: '20%',  right: undefined, width: '44%', rotate: -2  },
-  { top: '29%', left: undefined, right: '4%',   width: '50%', rotate:  9  },
-  { top: '45%', left: '-2%',  right: undefined, width: '50%', rotate: -8  },
-  { top: '49%', left: undefined, right: '-5%',  width: '48%', rotate:  4  },
-  { top: '65%', left: '10%',  right: undefined, width: '57%', rotate: -5  },
-  { top: '68%', left: undefined, right: '1%',   width: '45%', rotate:  7  },
+  // rząd górny
+  { top: '-4%',  left: '-6%',  width: '54%', rotate: -9  },  // duże, lewy górny
+  { top: '-3%',  left: '44%',  width: '62%', rotate:  6  },  // duże, prawy górny
+  // rząd 2
+  { top: '22%',  left: '-4%',  width: '38%', rotate: -5  },  // średnie, lewy
+  { top: '18%',  left: '30%',  width: '44%', rotate:  8  },  // średnie, środek
+  { top: '20%',  left: '68%',  width: '36%', rotate: -3  },  // małe, prawy
+  // rząd 3 — środek ekranu
+  { top: '40%',  left: '-5%',  width: '52%', rotate:  7  },  // duże, lewy
+  { top: '38%',  left: '42%',  width: '26%', rotate: -11 },  // małe, środek
+  { top: '36%',  left: '62%',  width: '44%', rotate:  4  },  // średnie, prawy
+  // rząd 4
+  { top: '58%',  left: '-3%',  width: '40%', rotate: -6  },  // średnie, lewy
+  { top: '56%',  left: '34%',  width: '52%', rotate:  9  },  // duże, prawy
+  // rząd dolny
+  { top: '74%',  left: '-5%',  width: '56%', rotate:  5  },  // duże, lewy dół
+  { top: '72%',  left: '46%',  width: '58%', rotate: -8  },  // duże, prawy dół
 ];
 
 function preloadImages(srcs) {
@@ -1748,7 +1764,6 @@ function preloadImages(srcs) {
   })));
 }
 
-// PHASES: preload → storm → fade → void → logo → exit
 function Preloader({ onDone }) {
   const [phase, setPhase] = useState('preload');
 
@@ -1758,15 +1773,14 @@ function Preloader({ onDone }) {
     return () => { document.body.style.overflow = ''; };
   }, []);
 
-  // After all images animate in (~stagger * count + settle), trigger fade
+  // Wszystkie zdjęcia ułożone → fade
   useEffect(() => {
     if (phase !== 'storm') return;
-    const stormDuration = IMAGES.length * STAGGER * 1000 + 900;
-    const t = setTimeout(() => setPhase('fade'), stormDuration);
+    const t = setTimeout(() => setPhase('fade'), IMAGES.length * STAGGER * 1000 + 1000);
     return () => clearTimeout(t);
   }, [phase]);
 
-  // Fade out (0.4s) → void pause (0.5s) → logo
+  // Fade 0.4s → void 0.5s → logo
   useEffect(() => {
     if (phase !== 'fade') return;
     const t = setTimeout(() => setPhase('void'), 400);
@@ -1779,7 +1793,7 @@ function Preloader({ onDone }) {
     return () => clearTimeout(t);
   }, [phase]);
 
-  // Logo shown for 1.2s then exit
+  // Logo 1.2s → exit
   useEffect(() => {
     if (phase !== 'logo') return;
     const t = setTimeout(() => setPhase('exit'), 1200);
@@ -1794,6 +1808,7 @@ function Preloader({ onDone }) {
   if (phase === 'preload') return null;
 
   const showImages = phase === 'storm' || phase === 'fade';
+  const isFading   = phase === 'fade';
   const showLogo   = phase === 'logo';
   const isExiting  = phase === 'exit';
 
@@ -1802,66 +1817,59 @@ function Preloader({ onDone }) {
       ${!isExiting && html`
         <${motion.div}
           key="overlay"
-          initial=${{ y: 0 }}
-          exit=${{ y: '-100%', transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] } }}
+          exit=${{ y: '-100%', transition: { duration: 0.65, ease: [0.4, 0, 0.2, 1] } }}
           style=${{
             position: 'fixed', inset: 0, zIndex: 10000,
             background: BG,
             overflow: 'hidden',
           }}
         >
-          <!-- COLLAGE IMAGES -->
-          <${AnimatePresence}>
-            ${showImages && IMAGES.map((src, i) => html`
-              <${motion.img}
-                key=${src}
-                src=${src}
-                alt=""
-                initial=${{ opacity: 0, scale: 0.8, rotate: LAYOUT[i].rotate }}
-                animate=${{
-                  opacity: phase === 'fade' ? 0 : 1,
-                  scale:   phase === 'fade' ? 0.8 : 1,
-                  rotate:  LAYOUT[i].rotate,
-                  transition: phase === 'fade'
-                    ? { duration: 0.4, ease: 'easeOut' }
-                    : { ...SPRING, delay: i * STAGGER }
-                }}
-                style=${{
-                  position: 'absolute',
-                  top:   LAYOUT[i].top,
-                  left:  LAYOUT[i].left,
-                  right: LAYOUT[i].right,
-                  width: LAYOUT[i].width,
-                  borderRadius: '10px',
-                  objectFit: 'cover',
-                  aspectRatio: '1 / 1',
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.45)',
-                  pointerEvents: 'none',
-                }}
-              />
-            `)}
-          </${AnimatePresence}>
+          <!-- MOZAIKA — zdjęcia "kładzione" jedno po drugim -->
+          ${showImages && IMAGES.map((src, i) => html`
+            <${motion.img}
+              key=${src}
+              src=${src}
+              alt=""
+              initial=${{ opacity: 0, scale: 0.5, rotate: LAYOUT[i].rotate }}
+              animate=${{
+                opacity: isFading ? 0 : 1,
+                scale:   isFading ? 0.85 : 1,
+                rotate:  LAYOUT[i].rotate,
+                transition: isFading
+                  ? { duration: 0.4, ease: 'easeOut' }
+                  : { ...SPRING, delay: i * STAGGER }
+              }}
+              style=${{
+                position: 'absolute',
+                top:    LAYOUT[i].top,
+                left:   LAYOUT[i].left,
+                width:  LAYOUT[i].width,
+                borderRadius: '8px',
+                objectFit: 'cover',
+                aspectRatio: '1 / 1',
+                boxShadow: '0 12px 40px rgba(0,0,0,0.55)',
+                pointerEvents: 'none',
+              }}
+            />
+          `)}
 
-          <!-- LOGO -->
+          <!-- LOGO — wyłania się po void -->
           <${AnimatePresence}>
             ${showLogo && html`
               <${motion.div}
                 key="logo"
-                initial=${{ opacity: 0, scale: 0.95, filter: 'blur(12px)' }}
+                initial=${{ opacity: 0, scale: 0.95, filter: 'blur(14px)' }}
                 animate=${{ opacity: 1, scale: 1, filter: 'blur(0px)',
                   transition: { duration: 0.8, ease: 'easeOut' }
                 }}
-                exit=${{ opacity: 0, transition: { duration: 0.2 } }}
+                exit=${{ opacity: 0, transition: { duration: 0.15 } }}
                 style=${{
                   position: 'absolute', inset: 0,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}
               >
-                <img
-                  src=${LOGO}
-                  alt="Rozkosh"
-                  style=${{ width: '180px', pointerEvents: 'none' }}
-                />
+                <img src=${LOGO} alt="Rozkosh"
+                  style=${{ width: '200px', pointerEvents: 'none' }} />
               </${motion.div}>
             `}
           </${AnimatePresence}>
