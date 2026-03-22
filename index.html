@@ -1732,28 +1732,33 @@ const IMAGES = [
 
 const LOGO = './kontekst_do_strony/rozkosh logo.png';
 
-// 12 nieregularnych wielokątów tessylujących pełny ekran (3 kolumny × 4 rzędy).
-// Pionowe cięcia z zygzakami: VL≈33%, VR≈67%
-// Poziome cięcia: H1≈23%, H2≈45%, H3≈68%
-// Każdy kawałek = unikalny kształt polygonalny.
-// transformOrigin = centrum danego regionu (dla efektu "pop w miejsce").
+// 12 całych zdjęć — każde w innym kształcie (clip-path), pozycje nakładają się
+// pokrywając cały ekran. Zdjęcia NIE są ułamkami — są w pełni widoczne w swoim kształcie.
 const LAYOUT = [
-  // Rząd 1
-  { clip: 'polygon(0% 0%,  35% 0%,  32% 20%, 0%  23%)',                 origin: '16% 10%',  rotate: -2 },
-  { clip: 'polygon(35% 0%, 67% 0%,  70% 25%, 32% 20%)',                 origin: '51% 11%',  rotate:  1 },
-  { clip: 'polygon(67% 0%, 100% 0%, 100% 22%,70% 25%)',                 origin: '84% 11%',  rotate: -3 },
-  // Rząd 2
-  { clip: 'polygon(0%  23%, 32% 20%, 38% 42%, 0%  45%)',                origin: '17% 33%',  rotate:  3 },
-  { clip: 'polygon(32% 20%, 70% 25%, 64% 48%, 38% 42%)',                origin: '51% 34%',  rotate: -1 },
-  { clip: 'polygon(70% 25%, 100% 22%,100% 44%,64% 48%)',                origin: '84% 34%',  rotate:  2 },
-  // Rząd 3
-  { clip: 'polygon(0%  45%, 38% 42%, 33% 63%, 0%  67%)',                origin: '17% 55%',  rotate: -3 },
-  { clip: 'polygon(38% 42%, 64% 48%, 68% 70%, 33% 63%)',                origin: '51% 56%',  rotate:  2 },
-  { clip: 'polygon(64% 48%, 100% 44%,100% 66%,68% 70%)',                origin: '84% 56%',  rotate: -2 },
-  // Rząd 4
-  { clip: 'polygon(0%  67%, 33% 63%, 36% 100%,0%  100%)',               origin: '16% 83%',  rotate:  4 },
-  { clip: 'polygon(33% 63%, 68% 70%, 65% 100%,36% 100%)',               origin: '51% 83%',  rotate: -2 },
-  { clip: 'polygon(68% 70%, 100% 66%,100% 100%,65% 100%)',              origin: '84% 83%',  rotate:  1 },
+  // koło — lewy górny (duże)
+  { top: '-8%',  left: '-10%', width: '65%', clip: 'circle(50% at 50% 50%)',                                                                   rotate: -5 },
+  // sześciokąt — prawy górny (średnie)
+  { top: '2%',   left: '45%',  width: '58%', clip: 'polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)',                                 rotate:  8 },
+  // diament — środek-góra (małe)
+  { top: '18%',  left: '22%',  width: '42%', clip: 'polygon(50% 0%,100% 50%,50% 100%,0% 50%)',                                                  rotate: -4 },
+  // pięciokąt — lewy środek (duże)
+  { top: '28%',  left: '-6%',  width: '60%', clip: 'polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%)',                                        rotate:  6 },
+  // koło — prawy środek (duże)
+  { top: '25%',  left: '44%',  width: '64%', clip: 'circle(50% at 50% 50%)',                                                                   rotate: -8 },
+  // ośmiokąt — środek (średnie)
+  { top: '40%',  left: '12%',  width: '50%', clip: 'polygon(30% 0%,70% 0%,100% 30%,100% 70%,70% 100%,30% 100%,0% 70%,0% 30%)',                rotate:  4 },
+  // blob nieregularny — lewy dolny-środek (duże)
+  { top: '50%',  left: '-8%',  width: '58%', clip: 'polygon(20% 0%,80% 5%,100% 30%,95% 75%,70% 100%,20% 95%,0% 65%,5% 25%)',                  rotate: -7 },
+  // sześciokąt — prawy dolny-środek (średnie)
+  { top: '48%',  left: '45%',  width: '60%', clip: 'polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)',                                 rotate:  5 },
+  // koło — środek-dół (małe)
+  { top: '62%',  left: '18%',  width: '46%', clip: 'circle(50% at 50% 50%)',                                                                   rotate: -3 },
+  // pięciokąt — lewy dół (duże)
+  { top: '70%',  left: '-5%',  width: '62%', clip: 'polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%)',                                        rotate:  7 },
+  // siedmiokąt — prawy dół (duże)
+  { top: '68%',  left: '40%',  width: '65%', clip: 'polygon(50% 0%,90% 18%,100% 60%,75% 100%,25% 100%,0% 60%,10% 18%)',                       rotate: -6 },
+  // blob — dół środek (średnie)
+  { top: '80%',  left: '8%',   width: '52%', clip: 'polygon(25% 0%,75% 0%,100% 30%,90% 80%,60% 100%,20% 90%,0% 60%,10% 20%)',                 rotate:  3 },
 ];
 
 function preloadImages(srcs) {
@@ -1821,35 +1826,34 @@ function Preloader({ onDone }) {
             overflow: 'hidden',
           }}
         >
-          <!-- PUZZLE — każde zdjęcie = unikalny kształt polygonalny -->
           ${showImages && IMAGES.map((src, i) => html`
             <${motion.img}
               key=${src}
               src=${src}
               alt=""
-              initial=${{ scale: 0, opacity: 0, rotate: LAYOUT[i].rotate * 3 }}
+              initial=${{ scale: 0.5, opacity: 0, rotate: LAYOUT[i].rotate * 2 }}
               animate=${{
-                scale:  isFading ? 1.05 : 1,
-                opacity: isFading ? 0 : 1,
-                rotate: isFading ? 0 : LAYOUT[i].rotate,
+                scale:   isFading ? 0.9 : 1,
+                opacity: isFading ? 0   : 1,
+                rotate:  isFading ? 0   : LAYOUT[i].rotate,
                 transition: isFading
                   ? { duration: 0.4, ease: 'easeOut' }
                   : { ...SPRING, delay: i * STAGGER }
               }}
               style=${{
-                position: 'fixed',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                clipPath: LAYOUT[i].clip,
-                transformOrigin: LAYOUT[i].origin,
+                position: 'absolute',
+                top:         LAYOUT[i].top,
+                left:        LAYOUT[i].left,
+                width:       LAYOUT[i].width,
+                aspectRatio: '1 / 1',
+                objectFit:   'cover',
+                clipPath:    LAYOUT[i].clip,
+                boxShadow:   '0 8px 32px rgba(0,0,0,0.5)',
                 pointerEvents: 'none',
               }}
             />
           `)}
 
-          <!-- LOGO -->
           <${AnimatePresence}>
             ${showLogo && html`
               <${motion.div}
