@@ -5,16 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rozkosh — Cukiernia & Kawiarnia, Rzeszów</title>
   <link rel="stylesheet" href="https://use.typekit.net/yov4gbp.css">
-  <script type="importmap">
-  {
-    "imports": {
-      "react":            "https://esm.sh/react@18",
-      "react-dom/client": "https://esm.sh/react-dom@18/client",
-      "framer-motion":    "https://esm.sh/framer-motion@11",
-      "htm":              "https://esm.sh/htm@3"
-    }
-  }
-  </script>
   <style>
     /* ===== RESET ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1105,7 +1095,6 @@
   </style>
 </head>
 <body>
-<div id="logo-loader"></div>
 
 <!-- CAKE CURSOR -->
 <div id="bee">🎂</div>
@@ -1700,142 +1689,6 @@ const revealObs = new IntersectionObserver(entries => {
 }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
 
 document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
-</script>
-
-<!-- ===== LOGO LOADER ===== -->
-<script type="module">
-import React, { useState, useEffect, useCallback } from 'react';
-import { createRoot } from 'react-dom/client';
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
-import htm from 'htm';
-const html = htm.bind(React.createElement);
-
-const PETAL_COLOR = '#F0A030';
-const R_COLOR     = '#B60057';
-const BG          = '#F0EBDE';
-
-// 8 petal centres arranged radially (deg 0 = right, going CW from top)
-const PETAL_ANGLES = [270, 315, 0, 45, 90, 135, 180, 225];
-const PETALS = PETAL_ANGLES.map((deg, i) => {
-  const rad = (deg * Math.PI) / 180;
-  return { cx: 50 + 22 * Math.cos(rad), cy: 50 + 22 * Math.sin(rad), i };
-});
-
-// Timing constants
-const STAGGER      = 0.1;
-const PETALS_DONE  = PETALS.length * STAGGER + 0.4; // ~1.2s
-const R_DELAY      = PETALS_DONE;
-const R_DURATION   = 0.8;
-const PULSE_START  = R_DELAY + R_DURATION + 0.1;
-
-function LogoLoader({ onDone }) {
-  const logoControls = useAnimation();
-  const [rDone, setRDone] = useState(false);
-
-  // Start pulsing after R finishes
-  useEffect(() => {
-    if (!rDone) return;
-    logoControls.start({
-      scale: [1, 1.02, 1],
-      transition: { duration: 1.5, repeat: Infinity, ease: 'easeInOut' }
-    });
-  }, [rDone]);
-
-  // Auto-complete after minimum display time (page load or 3 s, whichever last)
-  useEffect(() => {
-    let pageLoaded = false;
-    let timerDone  = false;
-    const tryDone  = () => { if (pageLoaded && timerDone) onDone(); };
-
-    const minTimer = setTimeout(() => { timerDone = true; tryDone(); }, 3000);
-
-    if (document.readyState === 'complete') {
-      pageLoaded = true;
-    } else {
-      window.addEventListener('load', () => { pageLoaded = true; tryDone(); }, { once: true });
-    }
-
-    return () => clearTimeout(minTimer);
-  }, [onDone]);
-
-  return html`
-    <${motion.div}
-      key="loader"
-      initial=${{ opacity: 1 }}
-      exit=${{ opacity: 0, transition: { duration: 0.55, ease: 'easeInOut' } }}
-      style=${{
-        position: 'fixed', inset: 0, zIndex: 9999,
-        background: BG,
-        display: 'flex', alignItems: 'center', justifyContent: 'center'
-      }}
-    >
-      <${motion.svg}
-        viewBox="0 0 100 100"
-        width="180" height="180"
-        animate=${logoControls}
-        style=${{ overflow: 'visible' }}
-      >
-        <!-- 8 petals -->
-        ${PETALS.map(p => html`
-          <${motion.circle}
-            key=${p.i}
-            cx=${p.cx} cy=${p.cy} r=${17}
-            fill=${PETAL_COLOR}
-            initial=${{ scale: 0, opacity: 0 }}
-            animate=${{ scale: 1, opacity: 1 }}
-            transition=${{
-              delay: p.i * STAGGER,
-              type: 'spring',
-              stiffness: 200,
-              damping: 16
-            }}
-            style=${{ transformOrigin: `${p.cx}px ${p.cy}px` }}
-          />
-        `)}
-
-        <!-- centre circle -->
-        <${motion.circle}
-          cx=${50} cy=${50} r=${22}
-          fill=${PETAL_COLOR}
-          initial=${{ scale: 0, opacity: 0 }}
-          animate=${{ scale: 1, opacity: 1 }}
-          transition=${{ delay: PETALS.length * STAGGER * 0.5, type: 'spring', stiffness: 220, damping: 18 }}
-          style=${{ transformOrigin: '50px 50px' }}
-        />
-
-        <!-- letter R (stroke draw) -->
-        <${motion.path}
-          d="M 42,63 L 42,38 L 51,38 C 57,38 61,41.5 61,46 C 61,50.5 57,53.5 51,53.5 L 42,53.5 M 50,53.5 L 61,63"
-          stroke=${R_COLOR}
-          strokeWidth=${3.8}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-          initial=${{ pathLength: 0, opacity: 0 }}
-          animate=${{ pathLength: 1, opacity: 1 }}
-          transition=${{
-            pathLength: { delay: R_DELAY, duration: R_DURATION, ease: 'easeInOut' },
-            opacity:    { delay: R_DELAY, duration: 0.01 }
-          }}
-          onAnimationComplete=${() => setRDone(true)}
-        />
-      </${motion.svg}>
-    </${motion.div}>
-  `;
-}
-
-function App() {
-  const [show, setShow] = useState(true);
-  const done = useCallback(() => setShow(false), []);
-  return html`
-    <${AnimatePresence}>
-      ${show && html`<${LogoLoader} onDone=${done} />`}
-    </${AnimatePresence}>
-  `;
-}
-
-const root = createRoot(document.getElementById('logo-loader'));
-root.render(html`<${App} />`);
 </script>
 </body>
 </html>
