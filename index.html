@@ -6,8 +6,6 @@
   <title>Rozkosh — Cukiernia & Kawiarnia, Rzeszów</title>
   <style id="preloader-cover">html{background:#306048}body{visibility:hidden}#preloader-root,#bee{visibility:visible}</style>
   <link rel="stylesheet" href="https://use.typekit.net/yov4gbp.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script type="importmap">
   {
     "imports": {
@@ -237,20 +235,15 @@
       flex-shrink: 0;
       overflow: hidden;
       display: flex;
+      opacity: 0;
+      transition: opacity 0.8s ease;
     }
 
     .hero-panel {
       flex: 1;
       height: 100%;
-      overflow: hidden;
-      will-change: clip-path;
-    }
-    .hero-panel-bg {
-      width: 100%;
-      height: 100%;
       background-size: cover;
       background-position: center;
-      will-change: transform;
     }
 
     .hero-bar {
@@ -299,7 +292,7 @@
       color: var(--dark2);
       opacity: 0;
       margin-bottom: 16px;
-      will-change: transform, opacity;
+      transition: opacity 0.7s ease;
     }
 
     .hero-title {
@@ -309,9 +302,10 @@
       line-height: 1.0;
       letter-spacing: -2px;
       color: #B60057;
+      opacity: 0;
+      transition: opacity 0.7s ease;
     }
     .hero-title em { font-style: normal; color: #306048; }
-    .hero-title .char { display: inline-block; will-change: transform, opacity; }
 
     .hero-sub {
       font-size: clamp(15px, 1.6vw, 18px);
@@ -320,7 +314,7 @@
       max-width: 420px;
       margin: 18px auto 0;
       opacity: 0;
-      will-change: transform, opacity;
+      transition: opacity 0.7s ease;
     }
 
     .hero-socials {
@@ -329,7 +323,7 @@
       gap: 14px;
       margin: 30px 0 32px;
       opacity: 0;
-      will-change: transform, opacity;
+      transition: opacity 0.7s ease;
     }
     .hero-social-link {
       width: 40px; height: 40px;
@@ -361,8 +355,7 @@
       text-transform: uppercase;
       text-decoration: none;
       opacity: 0;
-      will-change: transform, opacity;
-      transition: background .25s, color .25s;
+      transition: opacity 0.7s ease, background .25s, color .25s;
     }
     .hero-btn:hover { background: var(--dark); color: var(--cream); }
 
@@ -1200,10 +1193,10 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-img-wrap">
-    <div class="hero-panel" style="flex:1.2"><div class="hero-panel-bg" style="background-image:url('./kontekst_do_strony/tort rozkosh 8.png')"></div></div>
-    <div class="hero-panel" style="flex:1.0"><div class="hero-panel-bg" style="background-image:url('./kontekst_do_strony/tort rozkosh 10.png')"></div></div>
-    <div class="hero-panel" style="flex:1.3"><div class="hero-panel-bg" style="background-image:url('./kontekst_do_strony/tort rozkosh 12.png')"></div></div>
-    <div class="hero-panel" style="flex:0.9"><div class="hero-panel-bg" style="background-image:url('./kontekst_do_strony/tort rozkosh 112.png')"></div></div>
+    <div class="hero-panel" style="flex:1.2; background-image:url('./kontekst_do_strony/tort rozkosh 8.png')"></div>
+    <div class="hero-panel" style="flex:1.0; background-image:url('./kontekst_do_strony/tort rozkosh 10.png')"></div>
+    <div class="hero-panel" style="flex:1.3; background-image:url('./kontekst_do_strony/tort rozkosh 12.png')"></div>
+    <div class="hero-panel" style="flex:0.9; background-image:url('./kontekst_do_strony/tort rozkosh 112.png')"></div>
     <div class="hero-bar">
       <a href="#menu" class="hero-bar-item">Kawy</a>
       <a href="#menu" class="hero-bar-item">Herbaty</a>
@@ -1879,167 +1872,6 @@ const revealObs = new IntersectionObserver(entries => {
 document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
 </script>
 
-<!-- ===== HERO GSAP ANIMATIONS ===== -->
-<script>
-gsap.registerPlugin(ScrollTrigger);
-
-window.addEventListener('preloader:done', function startHeroAnimations() {
-  const panels   = document.querySelectorAll('.hero-panel');
-  const panelBgs = document.querySelectorAll('.hero-panel-bg');
-  const pills    = document.querySelectorAll('.hero-bar-item');
-  const eyebrow  = document.querySelector('.hero-eyebrow');
-  const titleEl  = document.querySelector('.hero-title');
-  const sub      = document.querySelector('.hero-sub');
-  const socials  = document.querySelector('.hero-socials');
-  const btn      = document.querySelector('.hero-btn');
-
-  /* ── Split title into individual char spans ── */
-  function splitTitle(el) {
-    const chars = [];
-    function processNode(node, isEm) {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const frag = document.createDocumentFragment();
-        [...node.textContent].forEach(ch => {
-          if (ch === ' ') {
-            frag.appendChild(document.createTextNode('\u00A0'));
-          } else {
-            const span = document.createElement('span');
-            span.className = isEm ? 'char char-em' : 'char';
-            span.textContent = ch;
-            chars.push(span);
-            frag.appendChild(span);
-          }
-        });
-        node.replaceWith(frag);
-      } else if (node.nodeName === 'EM') {
-        [...node.childNodes].forEach(child => processNode(child, true));
-      }
-    }
-    [...el.childNodes].forEach(n => processNode(n, false));
-    return chars;
-  }
-  const chars       = splitTitle(titleEl);
-  const rozkoshChars = [...document.querySelectorAll('.char-em')];
-
-  /* ── 1. Image panels: center-out clip-path wipe + scale ── */
-  gsap.set(panels,   { clipPath: 'inset(0 50% 0 50%)' });
-  gsap.set(panelBgs, { scale: 1.15 });
-
-  gsap.to(panels, {
-    clipPath: 'inset(0 0% 0 0%)',
-    duration: 1.4,
-    ease: 'power3.inOut',
-    stagger: 0.1,
-    onComplete() { panels.forEach(p => p.style.clipPath = 'none'); }
-  });
-  gsap.to(panelBgs, {
-    scale: 1,
-    duration: 1.8,
-    ease: 'power3.out',
-    stagger: 0.1,
-  });
-
-  /* ── 2. Pills cascade ── */
-  gsap.from(pills, {
-    y: 28,
-    opacity: 0,
-    duration: 0.6,
-    ease: 'back.out(1.7)',
-    stagger: 0.1,
-    delay: 0.7,
-  });
-
-  /* ── 3. Eyebrow ── */
-  gsap.to(eyebrow, {
-    opacity: 0.55,
-    y: 0,
-    duration: 0.7,
-    ease: 'power2.out',
-    delay: 0.6,
-  });
-  gsap.from(eyebrow, { y: 18, duration: 0.7, ease: 'power2.out', delay: 0.6 });
-
-  /* ── 4. Title chars stagger ── */
-  gsap.from(chars, {
-    y: 40,
-    opacity: 0,
-    duration: 0.55,
-    ease: 'power2.out',
-    stagger: 0.05,
-    delay: 0.75,
-  });
-
-  /* ── 5. Rozkosh! blur glow ── */
-  gsap.from(rozkoshChars, {
-    filter: 'blur(10px) brightness(2.5)',
-    duration: 1.3,
-    ease: 'power2.out',
-    stagger: { amount: 0.35 },
-    delay: 0.75 + (chars.length - rozkoshChars.length) * 0.05,
-  });
-
-  /* ── 6. Sub, socials, btn — spring physics ── */
-  gsap.from([sub, socials, btn], {
-    y: 30,
-    opacity: 0,
-    duration: 0.9,
-    ease: 'back.out(1.5)',
-    stagger: 0.13,
-    delay: 1.3,
-  });
-  gsap.to([sub, socials, btn], {
-    opacity: 1,
-    duration: 0.9,
-    ease: 'back.out(1.5)',
-    stagger: 0.13,
-    delay: 1.3,
-  });
-
-
-  /* ── 8. Mouse parallax on panel backgrounds ── */
-  const maxPx = 15;
-  document.addEventListener('mousemove', e => {
-    const cx = window.innerWidth  / 2;
-    const cy = window.innerHeight / 2;
-    const dx = (e.clientX - cx) / cx;
-    const dy = (e.clientY - cy) / cy;
-    panelBgs.forEach((bg, i) => {
-      const dir = i % 2 === 0 ? 1 : -1;
-      gsap.to(bg, {
-        x: -dx * maxPx * dir,
-        y: -dy * maxPx * 0.5,
-        duration: 0.9,
-        ease: 'power1.out',
-        overwrite: 'auto',
-      });
-    });
-  });
-
-  /* ── 9. Magnetic pills ── */
-  const magnetRadius = 30;
-  pills.forEach(pill => {
-    pill.addEventListener('mousemove', e => {
-      const r  = pill.getBoundingClientRect();
-      const cx = r.left + r.width  / 2;
-      const cy = r.top  + r.height / 2;
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
-      const dist = Math.hypot(dx, dy);
-      if (dist < magnetRadius) {
-        const strength = (1 - dist / magnetRadius) * 0.45;
-        gsap.to(pill, { x: dx * strength, y: dy * strength, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
-      }
-    });
-    pill.addEventListener('mouseleave', () => {
-      gsap.to(pill, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' });
-    });
-    /* hover scale */
-    pill.addEventListener('mouseenter', () => gsap.to(pill, { scale: 1.05, duration: 0.4, ease: 'power2.out' }));
-    pill.addEventListener('mouseleave', () => gsap.to(pill, { scale: 1,    duration: 0.4, ease: 'elastic.out(1, 0.5)' }));
-  });
-});
-</script>
-
 <!-- ===== GALLERY PRELOADER ===== -->
 <script type="module">
 import React, { useState, useEffect, useCallback } from 'react';
@@ -2160,7 +1992,6 @@ function Preloader({ onDone }) {
     const cover = document.getElementById('preloader-cover');
     if (cover) cover.remove();
     onDone();
-    window.dispatchEvent(new CustomEvent('preloader:done'));
   }, [onDone]);
 
   if (phase === 'preload') return null;
@@ -2241,6 +2072,34 @@ function App() {
 
 const root = createRoot(document.getElementById('preloader-root'));
 root.render(html`<${App} />`);
+
+/* ── Hero fade-in po preloaderze ── */
+function heroFadeIn() {
+  const els = [
+    document.querySelector('.hero-img-wrap'),
+    document.querySelector('.hero-eyebrow'),
+    document.querySelector('.hero-title'),
+    document.querySelector('.hero-sub'),
+    document.querySelector('.hero-socials'),
+    document.querySelector('.hero-btn'),
+  ];
+  els.forEach((el, i) => {
+    if (!el) return;
+    setTimeout(() => { el.style.opacity = '1'; }, i * 120);
+  });
+}
+
+new MutationObserver((mutations, obs) => {
+  for (const m of mutations) {
+    for (const node of m.removedNodes) {
+      if (node.id === 'preloader-cover') {
+        obs.disconnect();
+        heroFadeIn();
+        return;
+      }
+    }
+  }
+}).observe(document.head, { childList: true });
 </script>
 </body>
 </html>
