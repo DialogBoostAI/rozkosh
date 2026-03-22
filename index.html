@@ -1703,7 +1703,7 @@ const revealObs = new IntersectionObserver(entries => {
 document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
 </script>
 
-<!-- ===== FLASH & REVEAL PRELOADER ===== -->
+<!-- ===== GALLERY PRELOADER ===== -->
 <script type="module">
 import React, { useState, useEffect, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -1712,9 +1712,10 @@ import htm from 'htm';
 const html = htm.bind(React.createElement);
 
 const BG      = '#306048';
-const STAGGER = 0.15;
-const SPRING  = { type: 'spring', damping: 25, stiffness: 120, mass: 0.9 };
+const STAGGER = 0.18;
+const SPRING  = { type: 'spring', damping: 25, stiffness: 120 };
 
+// 10 zdjęć
 const IMAGES = [
   './kontekst_do_strony/tort rozkosh.png',
   './kontekst_do_strony/tort rozkosh 2.png',
@@ -1722,43 +1723,38 @@ const IMAGES = [
   './kontekst_do_strony/tort rozkosh 4.png',
   './kontekst_do_strony/tort rozkosh 5.png',
   './kontekst_do_strony/tort rozkosh 6.png',
-  './kontekst_do_strony/tort rozkosh7.png',
   './kontekst_do_strony/tort rozkosh 8.png',
   './kontekst_do_strony/tort rozkosh 9.png',
   './kontekst_do_strony/tort rozkosh 10.png',
-  './kontekst_do_strony/tort rozkosh 112.png',
   './kontekst_do_strony/tort rozkosh 12.png',
 ];
 
 const LOGO = './kontekst_do_strony/rozkosh logo.png';
 
-// 12 całych zdjęć — każde w innym kształcie (clip-path), pozycje nakładają się
-// pokrywając cały ekran. Zdjęcia NIE są ułamkami — są w pełni widoczne w swoim kształcie.
+// Niesymetryczna galeria — 10 kafli wypełniających 100% ekranu.
+// Układ 4 rzędów, każdy z inną liczbą i proporcjami kafli.
+// top/left/width/height w procentach viewport.
+//
+//  ┌────────────────────┬─────────────┐  0–36%
+//  │   0  (60% × 36%)  │ 1 (40%×36%) │
+//  ├───────┬────────────┴──┬──────────┤  36–58%
+//  │2(25%) │  3  (45%)     │ 4 (30%)  │
+//  ├───────┴────┬──────────┴──────────┤  58–82%
+//  │  5 (42%)  │   6 (35%)  │7 (23%) │
+//  ├────────────┴─────┬───────────────┤  82–100%
+//  │    8  (52%)      │  9  (48%)     │
+//  └──────────────────┴───────────────┘
 const LAYOUT = [
-  // koło — lewy górny (duże)
-  { top: '-8%',  left: '-10%', width: '65%', clip: 'circle(50% at 50% 50%)',                                                                   rotate: -5 },
-  // sześciokąt — prawy górny (średnie)
-  { top: '2%',   left: '45%',  width: '58%', clip: 'polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)',                                 rotate:  8 },
-  // diament — środek-góra (małe)
-  { top: '18%',  left: '22%',  width: '42%', clip: 'polygon(50% 0%,100% 50%,50% 100%,0% 50%)',                                                  rotate: -4 },
-  // pięciokąt — lewy środek (duże)
-  { top: '28%',  left: '-6%',  width: '60%', clip: 'polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%)',                                        rotate:  6 },
-  // koło — prawy środek (duże)
-  { top: '25%',  left: '44%',  width: '64%', clip: 'circle(50% at 50% 50%)',                                                                   rotate: -8 },
-  // ośmiokąt — środek (średnie)
-  { top: '40%',  left: '12%',  width: '50%', clip: 'polygon(30% 0%,70% 0%,100% 30%,100% 70%,70% 100%,30% 100%,0% 70%,0% 30%)',                rotate:  4 },
-  // blob nieregularny — lewy dolny-środek (duże)
-  { top: '50%',  left: '-8%',  width: '58%', clip: 'polygon(20% 0%,80% 5%,100% 30%,95% 75%,70% 100%,20% 95%,0% 65%,5% 25%)',                  rotate: -7 },
-  // sześciokąt — prawy dolny-środek (średnie)
-  { top: '48%',  left: '45%',  width: '60%', clip: 'polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)',                                 rotate:  5 },
-  // koło — środek-dół (małe)
-  { top: '62%',  left: '18%',  width: '46%', clip: 'circle(50% at 50% 50%)',                                                                   rotate: -3 },
-  // pięciokąt — lewy dół (duże)
-  { top: '70%',  left: '-5%',  width: '62%', clip: 'polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%)',                                        rotate:  7 },
-  // siedmiokąt — prawy dół (duże)
-  { top: '68%',  left: '40%',  width: '65%', clip: 'polygon(50% 0%,90% 18%,100% 60%,75% 100%,25% 100%,0% 60%,10% 18%)',                       rotate: -6 },
-  // blob — dół środek (średnie)
-  { top: '80%',  left: '8%',   width: '52%', clip: 'polygon(25% 0%,75% 0%,100% 30%,90% 80%,60% 100%,20% 90%,0% 60%,10% 20%)',                 rotate:  3 },
+  { top: '0%',  left: '0%',  width: '60%', height: '36%' },
+  { top: '0%',  left: '60%', width: '40%', height: '36%' },
+  { top: '36%', left: '0%',  width: '25%', height: '22%' },
+  { top: '36%', left: '25%', width: '45%', height: '22%' },
+  { top: '36%', left: '70%', width: '30%', height: '22%' },
+  { top: '58%', left: '0%',  width: '42%', height: '24%' },
+  { top: '58%', left: '42%', width: '35%', height: '24%' },
+  { top: '58%', left: '77%', width: '23%', height: '24%' },
+  { top: '82%', left: '0%',  width: '52%', height: '18%' },
+  { top: '82%', left: '52%', width: '48%', height: '18%' },
 ];
 
 function preloadImages(srcs) {
@@ -1774,13 +1770,14 @@ function Preloader({ onDone }) {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    preloadImages([...IMAGES, LOGO]).then(() => setPhase('storm'));
+    preloadImages([...IMAGES, LOGO]).then(() => setPhase('gallery'));
     return () => { document.body.style.overflow = ''; };
   }, []);
 
+  // Wszystkie kafle widoczne → chwila pauzy → fade
   useEffect(() => {
-    if (phase !== 'storm') return;
-    const t = setTimeout(() => setPhase('fade'), IMAGES.length * STAGGER * 1000 + 900);
+    if (phase !== 'gallery') return;
+    const t = setTimeout(() => setPhase('fade'), IMAGES.length * STAGGER * 1000 + 700);
     return () => clearTimeout(t);
   }, [phase]);
 
@@ -1809,7 +1806,7 @@ function Preloader({ onDone }) {
 
   if (phase === 'preload') return null;
 
-  const showImages = phase === 'storm' || phase === 'fade';
+  const showImages = phase === 'gallery' || phase === 'fade';
   const isFading   = phase === 'fade';
   const showLogo   = phase === 'logo';
   const isExiting  = phase === 'exit';
@@ -1823,7 +1820,6 @@ function Preloader({ onDone }) {
           style=${{
             position: 'fixed', inset: 0, zIndex: 10000,
             background: BG,
-            overflow: 'hidden',
           }}
         >
           ${showImages && IMAGES.map((src, i) => html`
@@ -1831,24 +1827,22 @@ function Preloader({ onDone }) {
               key=${src}
               src=${src}
               alt=""
-              initial=${{ scale: 0.5, opacity: 0, rotate: LAYOUT[i].rotate * 2 }}
+              initial=${{ opacity: 0, scale: 0.88 }}
               animate=${{
-                scale:   isFading ? 0.9 : 1,
-                opacity: isFading ? 0   : 1,
-                rotate:  isFading ? 0   : LAYOUT[i].rotate,
+                opacity: isFading ? 0 : 1,
+                scale:   isFading ? 1.04 : 1,
                 transition: isFading
                   ? { duration: 0.4, ease: 'easeOut' }
                   : { ...SPRING, delay: i * STAGGER }
               }}
               style=${{
                 position: 'absolute',
-                top:         LAYOUT[i].top,
-                left:        LAYOUT[i].left,
-                width:       LAYOUT[i].width,
-                aspectRatio: '1 / 1',
-                objectFit:   'cover',
-                clipPath:    LAYOUT[i].clip,
-                boxShadow:   '0 8px 32px rgba(0,0,0,0.5)',
+                top:       LAYOUT[i].top,
+                left:      LAYOUT[i].left,
+                width:     LAYOUT[i].width,
+                height:    LAYOUT[i].height,
+                objectFit: 'cover',
+                display:   'block',
                 pointerEvents: 'none',
               }}
             />
