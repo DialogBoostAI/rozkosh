@@ -1677,7 +1677,9 @@ const bee = document.getElementById('bee');
 let bx = innerWidth/2, by = innerHeight/2, mx = bx, my = by;
 const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-if (!touch) {
+if (touch) {
+  bee.style.display = 'none';
+} else {
   document.addEventListener('mousemove', e => {
     const z = parseFloat(getComputedStyle(document.body).zoom) || 1;
     mx = e.clientX / z;
