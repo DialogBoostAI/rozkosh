@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rozkosh — Cukiernia & Kawiarnia, Rzeszów</title>
+  <style id="preloader-cover">body{visibility:hidden}#preloader-root,#bee{visibility:visible}</style>
   <link rel="stylesheet" href="https://use.typekit.net/yov4gbp.css">
   <script type="importmap">
   {
@@ -1818,6 +1819,8 @@ function Preloader({ onDone }) {
 
   const handleExitDone = useCallback(() => {
     document.body.style.overflow = '';
+    const cover = document.getElementById('preloader-cover');
+    if (cover) cover.remove();
     onDone();
   }, [onDone]);
 
