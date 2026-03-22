@@ -357,7 +357,13 @@
       opacity: 0;
       transition: opacity 0.7s ease, background .25s, color .25s;
     }
-    .hero-btn:hover { background: var(--dark); color: var(--cream); }
+    .hero-btn:hover { background: var(--dark); color: var(--cream); animation: none; }
+
+    @keyframes heroBtnPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(44,26,14,0.25); }
+      50%       { box-shadow: 0 0 0 8px rgba(44,26,14,0); }
+    }
+    .hero-btn.visible { animation: heroBtnPulse 2.4s ease-in-out infinite; }
 
     /* ===== SCROLL REVEAL ===== */
     [data-reveal] {
@@ -2085,7 +2091,10 @@ function heroFadeIn() {
   ];
   els.forEach((el, i) => {
     if (!el) return;
-    setTimeout(() => { el.style.opacity = '1'; }, i * 120);
+    setTimeout(() => {
+      el.style.opacity = '1';
+      if (el.classList.contains('hero-btn')) el.classList.add('visible');
+    }, i * 120);
   });
 }
 
