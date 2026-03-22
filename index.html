@@ -33,6 +33,9 @@
 
     html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
+    * { user-select: none; -webkit-user-select: none; }
+    img { -webkit-user-drag: none; }
+
     html {
       overflow-x: hidden;
     }
@@ -68,19 +71,25 @@
       align-items: center;
       justify-content: center;
       gap: 60px;
-      padding: 22px 64px;
+      padding: 14px 64px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       transition: background 0.35s, padding 0.35s, box-shadow 0.35s;
     }
 
     nav.scrolled {
-      background: var(--pink);
-      padding: 14px 64px;
-      box-shadow: 0 2px 24px rgba(44,26,14,.10);
+      background: #B60057;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      box-shadow: 0 2px 24px rgba(44,26,14,.15);
+      border-bottom: none;
     }
     nav.scrolled .nav-logo,
     nav.scrolled .nav-links a { color: #F0EBDE; }
     nav.scrolled .nav-logo span { color: #F0EBDE; }
-    nav.scrolled .nav-links a::after { background: white; }
+    nav.scrolled .nav-links a::after { background: #F0EBDE; }
 
     .nav-logo {
       font-family: 'bd-supper', sans-serif;
@@ -213,12 +222,17 @@
     }
 
     /* ===== HERO ===== */
-    #hero { padding: 0; }
+    #hero {
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
 
     .hero-img-wrap {
       position: relative;
       height: 50vh;
-      min-height: 300px;
+      flex-shrink: 0;
       overflow: hidden;
       display: flex;
     }
@@ -266,7 +280,7 @@
     .hero-text-block {
       background: var(--cream);
       text-align: center;
-      padding: 72px 24px 80px;
+      padding: 48px 24px 56px;
     }
 
     .hero-eyebrow {
@@ -654,18 +668,21 @@
     .lightbox {
       display: none;
       position: fixed; inset: 0;
-      background: rgba(44,26,14,.88);
+      background: rgba(0,0,0,.88);
       z-index: 1000;
       align-items: center;
       justify-content: center;
     }
     .lightbox.open { display: flex; }
     .lb-img {
-      max-width: 92vw;
+      max-width: 82vw;
       max-height: 90vh;
       border-radius: 14px;
       object-fit: contain;
+      transition: opacity 0.22s ease, transform 0.22s ease;
     }
+    .lb-img.lb-out-left  { opacity: 0; transform: translateX(-40px); }
+    .lb-img.lb-out-right { opacity: 0; transform: translateX( 40px); }
     .lb-close {
       position: absolute;
       top: 20px; right: 28px;
@@ -679,6 +696,23 @@
       transition: opacity .2s;
     }
     .lb-close:hover { opacity: 1; }
+    .lb-arrow {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      background: rgba(240,235,222,.15);
+      border: none;
+      color: #F0EBDE;
+      font-size: 32px;
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+      user-select: none;
+    }
+    .lb-arrow:hover { background: rgba(240,235,222,.3); }
+    .lb-prev { left: 20px; }
+    .lb-next { right: 20px; }
 
     /* ===== OPINIE ===== */
     #opinie { background: var(--cream); }
@@ -688,16 +722,32 @@
       margin: 0 auto;
     }
 
-    .opinie-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+    .opinie-carousel-outer {
+      overflow: hidden;
+      position: relative;
+      margin: 0 -32px;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+
+    .opinie-track {
+      display: flex;
       gap: 22px;
+      width: max-content;
+      animation: scroll-reviews 36s linear infinite;
+    }
+
+    @keyframes scroll-reviews {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     .review-card {
       background: white;
       border-radius: 20px;
       padding: 30px 28px;
+      width: 320px;
+      flex-shrink: 0;
       transition: box-shadow .25s;
     }
     .review-card:hover {
@@ -1012,6 +1062,12 @@
     }
     .form-submit:active { transform: translateY(0); }
 
+    @media (min-width: 1025px) {
+      body { zoom: 1.2; }
+      #hero { height: calc(100vh / 1.2); }
+      .hero-img-wrap { height: calc(50vh / 1.2); }
+    }
+
     @media (max-width: 600px) {
       .kontakt-form-card { padding: 36px 24px; }
       .form-row { grid-template-columns: 1fr; }
@@ -1045,26 +1101,8 @@
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
-      nav { padding: 18px 36px; }
+      nav { padding: 13px 36px; justify-content: space-between; gap: 0; }
       nav.scrolled { padding: 13px 36px; }
-      section { padding: 80px 36px; }
-      .onas-grid { gap: 48px; }
-      .masonry { columns: 3; }
-      .opinie-grid { grid-template-columns: 1fr 1fr; }
-      .menu-group { grid-template-columns: 150px 1fr; }
-      footer { padding: 44px 36px; }
-    }
-
-    @media (max-width: 768px) {
-      nav { padding: 16px 24px; }
-      nav.scrolled { padding: 12px 24px; }
-      section { padding: 70px 24px; }
-      .onas-img-wrap { display: none; }
-      .hero-panel:nth-child(3), .hero-panel:nth-child(4) { display: none; }
-      .hero-panel { flex: 1 !important; }
-
-
-      nav { justify-content: space-between; gap: 0; }
       .nav-links { display: none; }
       .nav-burger { display: flex; }
       .nav-logo { color: var(--cream); }
@@ -1072,7 +1110,23 @@
       .nav-burger span { background: var(--cream); }
       nav.scrolled .nav-logo { color: #F0EBDE; }
       nav.scrolled .nav-logo span { color: #F0EBDE; }
-      nav.scrolled .nav-burger span { background: var(--cream); }
+      nav.scrolled .nav-burger span { background: #F0EBDE; }
+      section { padding: 80px 36px; }
+      .onas-grid { gap: 48px; }
+      .masonry { columns: 3; }
+      /* opinie: carousel adapts automatically */
+      .menu-group { grid-template-columns: 150px 1fr; }
+      footer { padding: 44px 36px; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 12px 24px; }
+      nav.scrolled { padding: 12px 24px; }
+      section { padding: 70px 24px; }
+      .onas-img-wrap { display: none; }
+      .hero-panel:nth-child(3), .hero-panel:nth-child(4) { display: none; }
+      .hero-panel { flex: 1 !important; }
+
 
       .onas-grid { grid-template-columns: 1fr; }
       .onas-img-wrap { max-width: 480px; }
@@ -1082,14 +1136,14 @@
       .menu-group-label { padding-top: 0; margin-bottom: 10px; }
 
       .masonry { columns: 2; }
-      .opinie-grid { grid-template-columns: 1fr; }
+      /* opinie carousel — no grid override needed */
       .kontakt-grid { grid-template-columns: 1fr; }
 
       footer { padding: 40px 24px; flex-direction: column; text-align: center; }
     }
 
     @media (max-width: 480px) {
-      nav { padding: 14px 20px; }
+      nav { padding: 10px 20px; }
       nav.scrolled { padding: 10px 20px; }
       section { padding: 60px 20px; }
       .masonry {
@@ -1427,7 +1481,9 @@
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <button class="lb-close" id="lbClose">×</button>
+  <button class="lb-arrow lb-prev" id="lbPrev">&#8592;</button>
   <img class="lb-img" id="lbImg" src="" alt="">
+  <button class="lb-arrow lb-next" id="lbNext">&#8594;</button>
 </div>
 
 <!-- OPINIE -->
@@ -1435,24 +1491,82 @@
   <div class="opinie-wrap">
     <div class="sec-label" data-reveal="up">Co mowia goscie</div>
     <div class="sec-title" data-reveal="up" data-delay="80">Opinie</div>
-    <div class="opinie-grid">
-      <div class="review-card" data-reveal="up" data-delay="0">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">„Najlepsza drozdzowka w Rzeszowie, bez zadnych watpliwosci. Klimat kawiarni jest wyjatkowy — przytulnie, slodko i z dusza. Wracam tu co tydzien."</p>
-        <div class="review-author">Karolina M.</div>
-        <div class="review-src">Google Maps</div>
-      </div>
-      <div class="review-card" data-reveal="up" data-delay="110">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">„Sniadania tutaj to osobny poziom. Bajgle z lososiem i flat white — idealne polaczenie. Obsluga zawsze mila i szybka. Polecam kazdemu!"</p>
-        <div class="review-author">Piotr W.</div>
-        <div class="review-src">Google Maps</div>
-      </div>
-      <div class="review-card" data-reveal="up" data-delay="220">
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">„Zamawialam tort urodzinowy i bylam zachwycona — piekny, pyszny i dokladnie taki jak prosilam. Polecam z calego serca kazdemu kto szuka czegos wyjatkowego."</p>
-        <div class="review-author">Anna K.</div>
-        <div class="review-src">Facebook</div>
+    <div class="opinie-carousel-outer">
+      <div class="opinie-track" id="opinieTrack">
+        <!-- === oryginalne karty === -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Ptyś z kremem truskawkowym bardzo dobry — krem gładki i puszysty, a ciasto chrupiące. Wystrój ładny, witryna schodzi bardzo szybko — koło godziny 14 zostają już tylko resztki, więc należy się spieszyć, jeśli chce się mieć wybór."</p>
+          <div class="review-author">Marysia Markiewicz</div>
+          <div class="review-src">Google Maps</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Najlepsza cukiernia w mieście 😍 Pyszne tartaletki, bezy, serniki, a ptysie nie mają sobie równych. Zamawiałam babeczki na urodziny córki — były piękne i smaczne."</p>
+          <div class="review-author">Natalia</div>
+          <div class="review-src">Google Maps</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Tort urodzinowy córki był nie dość że piękny, w lawendowym kolorze — to jeszcze miał zachwycające wnętrze: mocno czekoladowy, wilgotny biszkopt, pyszny krem czekoladowy i wkładka malinowa… Niezwykłe doznania smakowe 👌 Brawo dla Was! 👏"</p>
+          <div class="review-author">Renata Kozio</div>
+          <div class="review-src">Google Maps</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Petarda! Będę wracać tylko do Was 🥰 Brałam na wynos i wszystko bardzo smakowało domownikom — beza, ptyś malina&amp;pistacja, tarteletka malinowa. Ja na miejscu piłam kawę i jadłam cynamonkę lotus — polecam! Miła obsługa i ładne wnętrze."</p>
+          <div class="review-author">Iwona K.</div>
+          <div class="review-src">Google Maps</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Jeśli chcesz zjeść dobre i jedno z ładniej wykonanych ciast podczas spaceru lub po nim — to właśnie miejsce, które warto odwiedzić."</p>
+          <div class="review-author">Lordu Fubu</div>
+          <div class="review-src">Google Maps</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Polecam serdecznie. Miła obsługa, pyszny ptyś pistacjowy, kawa moka oraz matcha jabłko — najlepsza na świecie."</p>
+          <div class="review-author">Mateusz Gawron</div>
+          <div class="review-src">Google Maps</div>
+        </div>
+        <!-- === duplikaty dla bezszwowej pętli === -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Ptyś z kremem truskawkowym bardzo dobry — krem gładki i puszysty, a ciasto chrupiące. Wystrój ładny, witryna schodzi bardzo szybko — koło godziny 14 zostają już tylko resztki, więc należy się spieszyć, jeśli chce się mieć wybór."</p>
+          <div class="review-author">Marysia Markiewicz</div>
+          <div class="review-src">Google Maps</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Najlepsza cukiernia w mieście 😍 Pyszne tartaletki, bezy, serniki, a ptysie nie mają sobie równych. Zamawiałam babeczki na urodziny córki — były piękne i smaczne."</p>
+          <div class="review-author">Natalia</div>
+          <div class="review-src">Google Maps</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Tort urodzinowy córki był nie dość że piękny, w lawendowym kolorze — to jeszcze miał zachwycające wnętrze: mocno czekoladowy, wilgotny biszkopt, pyszny krem czekoladowy i wkładka malinowa… Niezwykłe doznania smakowe 👌 Brawo dla Was! 👏"</p>
+          <div class="review-author">Renata Kozio</div>
+          <div class="review-src">Google Maps</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Petarda! Będę wracać tylko do Was 🥰 Brałam na wynos i wszystko bardzo smakowało domownikom — beza, ptyś malina&amp;pistacja, tarteletka malinowa. Ja na miejscu piłam kawę i jadłam cynamonkę lotus — polecam! Miła obsługa i ładne wnętrze."</p>
+          <div class="review-author">Iwona K.</div>
+          <div class="review-src">Google Maps</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Jeśli chcesz zjeść dobre i jedno z ładniej wykonanych ciast podczas spaceru lub po nim — to właśnie miejsce, które warto odwiedzić."</p>
+          <div class="review-author">Lordu Fubu</div>
+          <div class="review-src">Google Maps</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Polecam serdecznie. Miła obsługa, pyszny ptyś pistacjowy, kawa moka oraz matcha jabłko — najlepsza na świecie."</p>
+          <div class="review-author">Mateusz Gawron</div>
+          <div class="review-src">Google Maps</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1555,7 +1669,11 @@ let bx = innerWidth/2, by = innerHeight/2, mx = bx, my = by;
 const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 if (!touch) {
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  document.addEventListener('mousemove', e => {
+    const z = parseFloat(getComputedStyle(document.body).zoom) || 1;
+    mx = e.clientX / z;
+    my = e.clientY / z;
+  });
   (function tick() {
     bx += (mx - bx) * .11;
     by += (my - by) * .11;
@@ -1568,7 +1686,7 @@ if (!touch) {
 /* ===== NAVBAR ===== */
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', scrollY > 50);
+  navbar.classList.toggle('scrolled', scrollY > 10);
 }, { passive: true });
 
 /* ===== MOBILE NAV ===== */
@@ -1674,20 +1792,67 @@ document.querySelectorAll('.gal-btn').forEach(btn => {
 });
 
 /* ===== LIGHTBOX ===== */
-document.querySelectorAll('.mas-item').forEach(item => {
-  item.addEventListener('click', () => {
-    document.getElementById('lbImg').src = item.querySelector('img').src;
-    document.getElementById('lightbox').classList.add('open');
-  });
+// Zablokuj przeciąganie wszystkich obrazków
+document.querySelectorAll('img').forEach(img => img.setAttribute('draggable', 'false'));
+
+const lbItems = [];
+let lbIndex = 0;
+let lbAnimating = false;
+
+document.querySelectorAll('.mas-item').forEach((item, i) => {
+  lbItems.push(item.querySelector('img').src);
+  item.addEventListener('click', () => lbOpen(i, null));
 });
-document.getElementById('lbClose').addEventListener('click', () => {
+
+function lbOpen(i, dir) {
+  const idx = ((i % lbItems.length) + lbItems.length) % lbItems.length;
+  const img = document.getElementById('lbImg');
+  const lb  = document.getElementById('lightbox');
+
+  if (!lb.classList.contains('open')) {
+    lbIndex = idx;
+    img.src = lbItems[lbIndex];
+    lb.classList.add('open');
+    return;
+  }
+
+  if (lbAnimating) return;
+  lbAnimating = true;
+
+  const slideOut = dir === 'prev' ? 'lb-out-right' : 'lb-out-left';
+  img.classList.add(slideOut);
+
+  setTimeout(() => {
+    lbIndex = idx;
+    img.src = lbItems[lbIndex];
+    img.classList.remove(slideOut);
+    // ustaw pozycję startową nowego zdjęcia (po przeciwnej stronie)
+    img.style.transition = 'none';
+    img.style.opacity = '0';
+    img.style.transform = dir === 'prev' ? 'translateX(-40px)' : 'translateX(40px)';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      img.style.transition = '';
+      img.style.opacity = '';
+      img.style.transform = '';
+      setTimeout(() => { lbAnimating = false; }, 240);
+    }));
+  }, 220);
+}
+
+function lbClose() {
   document.getElementById('lightbox').classList.remove('open');
-});
+}
+document.getElementById('lbClose').addEventListener('click', lbClose);
+document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); lbOpen(lbIndex - 1, 'prev'); });
+document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); lbOpen(lbIndex + 1, 'next'); });
 document.getElementById('lightbox').addEventListener('click', e => {
-  if (e.target.id === 'lightbox') document.getElementById('lightbox').classList.remove('open');
+  if (e.target.id === 'lightbox') lbClose();
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape')      lbClose();
+  if (e.key === 'ArrowLeft')   lbOpen(lbIndex - 1, 'prev');
+  if (e.key === 'ArrowRight')  lbOpen(lbIndex + 1, 'next');
 });
 
 /* ===== SCROLL REVEAL ===== */
@@ -1788,8 +1953,9 @@ function Preloader({ onDone }) {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
     preloadImages([...IMAGES, LOGO]).then(() => setPhase('gallery'));
-    return () => { document.body.style.overflow = ''; };
+    return () => { document.body.style.overflow = ''; document.documentElement.style.overflow = ''; };
   }, []);
 
   // Wszystkie kafle widoczne → chwila pauzy → fade
@@ -1819,6 +1985,7 @@ function Preloader({ onDone }) {
 
   const handleExitDone = useCallback(() => {
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
     const cover = document.getElementById('preloader-cover');
     if (cover) cover.remove();
     onDone();
