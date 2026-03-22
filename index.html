@@ -1713,10 +1713,8 @@ const html = htm.bind(React.createElement);
 
 const BG      = '#306048';
 const STAGGER = 0.15;
-// Miękkie odbicie — "kładzenie na stole"
-const SPRING  = { type: 'spring', damping: 20, stiffness: 180, mass: 0.8 };
+const SPRING  = { type: 'spring', damping: 25, stiffness: 120, mass: 0.9 };
 
-// Wszystkie 12 zdjęć z galerii
 const IMAGES = [
   './kontekst_do_strony/tort rozkosh.png',
   './kontekst_do_strony/tort rozkosh 2.png',
@@ -1734,26 +1732,28 @@ const IMAGES = [
 
 const LOGO = './kontekst_do_strony/rozkosh logo.png';
 
-// 12 pozycji pokrywających cały ekran — efekt "zasypywania" zdjęciami
-// Mieszanka rozmiarów: duże (45-55%), średnie (30-38%), małe (20-26%)
+// 12 nieregularnych wielokątów tessylujących pełny ekran (3 kolumny × 4 rzędy).
+// Pionowe cięcia z zygzakami: VL≈33%, VR≈67%
+// Poziome cięcia: H1≈23%, H2≈45%, H3≈68%
+// Każdy kawałek = unikalny kształt polygonalny.
+// transformOrigin = centrum danego regionu (dla efektu "pop w miejsce").
 const LAYOUT = [
-  // rząd górny
-  { top: '-4%',  left: '-6%',  width: '54%', rotate: -9  },  // duże, lewy górny
-  { top: '-3%',  left: '44%',  width: '62%', rotate:  6  },  // duże, prawy górny
-  // rząd 2
-  { top: '22%',  left: '-4%',  width: '38%', rotate: -5  },  // średnie, lewy
-  { top: '18%',  left: '30%',  width: '44%', rotate:  8  },  // średnie, środek
-  { top: '20%',  left: '68%',  width: '36%', rotate: -3  },  // małe, prawy
-  // rząd 3 — środek ekranu
-  { top: '40%',  left: '-5%',  width: '52%', rotate:  7  },  // duże, lewy
-  { top: '38%',  left: '42%',  width: '26%', rotate: -11 },  // małe, środek
-  { top: '36%',  left: '62%',  width: '44%', rotate:  4  },  // średnie, prawy
-  // rząd 4
-  { top: '58%',  left: '-3%',  width: '40%', rotate: -6  },  // średnie, lewy
-  { top: '56%',  left: '34%',  width: '52%', rotate:  9  },  // duże, prawy
-  // rząd dolny
-  { top: '74%',  left: '-5%',  width: '56%', rotate:  5  },  // duże, lewy dół
-  { top: '72%',  left: '46%',  width: '58%', rotate: -8  },  // duże, prawy dół
+  // Rząd 1
+  { clip: 'polygon(0% 0%,  35% 0%,  32% 20%, 0%  23%)',                 origin: '16% 10%',  rotate: -2 },
+  { clip: 'polygon(35% 0%, 67% 0%,  70% 25%, 32% 20%)',                 origin: '51% 11%',  rotate:  1 },
+  { clip: 'polygon(67% 0%, 100% 0%, 100% 22%,70% 25%)',                 origin: '84% 11%',  rotate: -3 },
+  // Rząd 2
+  { clip: 'polygon(0%  23%, 32% 20%, 38% 42%, 0%  45%)',                origin: '17% 33%',  rotate:  3 },
+  { clip: 'polygon(32% 20%, 70% 25%, 64% 48%, 38% 42%)',                origin: '51% 34%',  rotate: -1 },
+  { clip: 'polygon(70% 25%, 100% 22%,100% 44%,64% 48%)',                origin: '84% 34%',  rotate:  2 },
+  // Rząd 3
+  { clip: 'polygon(0%  45%, 38% 42%, 33% 63%, 0%  67%)',                origin: '17% 55%',  rotate: -3 },
+  { clip: 'polygon(38% 42%, 64% 48%, 68% 70%, 33% 63%)',                origin: '51% 56%',  rotate:  2 },
+  { clip: 'polygon(64% 48%, 100% 44%,100% 66%,68% 70%)',                origin: '84% 56%',  rotate: -2 },
+  // Rząd 4
+  { clip: 'polygon(0%  67%, 33% 63%, 36% 100%,0%  100%)',               origin: '16% 83%',  rotate:  4 },
+  { clip: 'polygon(33% 63%, 68% 70%, 65% 100%,36% 100%)',               origin: '51% 83%',  rotate: -2 },
+  { clip: 'polygon(68% 70%, 100% 66%,100% 100%,65% 100%)',              origin: '84% 83%',  rotate:  1 },
 ];
 
 function preloadImages(srcs) {
@@ -1773,14 +1773,12 @@ function Preloader({ onDone }) {
     return () => { document.body.style.overflow = ''; };
   }, []);
 
-  // Wszystkie zdjęcia ułożone → fade
   useEffect(() => {
     if (phase !== 'storm') return;
-    const t = setTimeout(() => setPhase('fade'), IMAGES.length * STAGGER * 1000 + 1000);
+    const t = setTimeout(() => setPhase('fade'), IMAGES.length * STAGGER * 1000 + 900);
     return () => clearTimeout(t);
   }, [phase]);
 
-  // Fade 0.4s → void 0.5s → logo
   useEffect(() => {
     if (phase !== 'fade') return;
     const t = setTimeout(() => setPhase('void'), 400);
@@ -1793,10 +1791,9 @@ function Preloader({ onDone }) {
     return () => clearTimeout(t);
   }, [phase]);
 
-  // Logo 1.2s → exit
   useEffect(() => {
     if (phase !== 'logo') return;
-    const t = setTimeout(() => setPhase('exit'), 1200);
+    const t = setTimeout(() => setPhase('exit'), 1400);
     return () => clearTimeout(t);
   }, [phase]);
 
@@ -1824,36 +1821,35 @@ function Preloader({ onDone }) {
             overflow: 'hidden',
           }}
         >
-          <!-- MOZAIKA — zdjęcia "kładzione" jedno po drugim -->
+          <!-- PUZZLE — każde zdjęcie = unikalny kształt polygonalny -->
           ${showImages && IMAGES.map((src, i) => html`
             <${motion.img}
               key=${src}
               src=${src}
               alt=""
-              initial=${{ opacity: 0, scale: 0.5, rotate: LAYOUT[i].rotate }}
+              initial=${{ scale: 0, opacity: 0, rotate: LAYOUT[i].rotate * 3 }}
               animate=${{
+                scale:  isFading ? 1.05 : 1,
                 opacity: isFading ? 0 : 1,
-                scale:   isFading ? 0.85 : 1,
-                rotate:  LAYOUT[i].rotate,
+                rotate: isFading ? 0 : LAYOUT[i].rotate,
                 transition: isFading
                   ? { duration: 0.4, ease: 'easeOut' }
                   : { ...SPRING, delay: i * STAGGER }
               }}
               style=${{
-                position: 'absolute',
-                top:    LAYOUT[i].top,
-                left:   LAYOUT[i].left,
-                width:  LAYOUT[i].width,
-                borderRadius: '8px',
+                position: 'fixed',
+                inset: 0,
+                width: '100%',
+                height: '100%',
                 objectFit: 'cover',
-                aspectRatio: '1 / 1',
-                boxShadow: '0 12px 40px rgba(0,0,0,0.55)',
+                clipPath: LAYOUT[i].clip,
+                transformOrigin: LAYOUT[i].origin,
                 pointerEvents: 'none',
               }}
             />
           `)}
 
-          <!-- LOGO — wyłania się po void -->
+          <!-- LOGO -->
           <${AnimatePresence}>
             ${showLogo && html`
               <${motion.div}
