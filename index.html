@@ -1890,67 +1890,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import htm from 'htm';
 const html = htm.bind(React.createElement);
 
-const BG      = '#306048';
-const STAGGER = 0.13;
-const EASE    = [0.23, 1, 0.32, 1]; // Power4.out
-
-const IMAGES = [
-  './kontekst_do_strony/tort rozkosh.png',
-  './kontekst_do_strony/tort rozkosh 2.png',
-  './kontekst_do_strony/tort rozkosh 3.png',
-  './kontekst_do_strony/tort rozkosh 4.png',
-  './kontekst_do_strony/tort rozkosh 5.png',
-  './kontekst_do_strony/tort rozkosh 6.png',
-  './kontekst_do_strony/tort rozkosh 8.png',
-  './kontekst_do_strony/tort rozkosh 9.png',
-  './kontekst_do_strony/tort rozkosh 10.png',
-  './kontekst_do_strony/tort rozkosh 12.png',
-];
+const BG   = '#306048';
+const EASE = [0.23, 1, 0.32, 1]; // Power4.out
 
 const LOGO = './kontekst_do_strony/rozkosh logo.png';
-
-const LAYOUT_PORTRAIT = [
-  { top: '0%',  left: '0%',  width: '60%', height: '36%' },
-  { top: '0%',  left: '60%', width: '40%', height: '36%' },
-  { top: '36%', left: '0%',  width: '25%', height: '22%' },
-  { top: '36%', left: '25%', width: '45%', height: '22%' },
-  { top: '36%', left: '70%', width: '30%', height: '22%' },
-  { top: '58%', left: '0%',  width: '42%', height: '24%' },
-  { top: '58%', left: '42%', width: '35%', height: '24%' },
-  { top: '58%', left: '77%', width: '23%', height: '24%' },
-  { top: '82%', left: '0%',  width: '52%', height: '18%' },
-  { top: '82%', left: '52%', width: '48%', height: '18%' },
-];
-
-const LAYOUT_LANDSCAPE = [
-  { top: '0%',  left: '0%',  width: '25%', height: '55%' },
-  { top: '55%', left: '0%',  width: '25%', height: '45%' },
-  { top: '0%',  left: '25%', width: '27%', height: '35%' },
-  { top: '35%', left: '25%', width: '27%', height: '38%' },
-  { top: '73%', left: '25%', width: '27%', height: '27%' },
-  { top: '0%',  left: '52%', width: '24%', height: '60%' },
-  { top: '60%', left: '52%', width: '24%', height: '40%' },
-  { top: '0%',  left: '76%', width: '24%', height: '45%' },
-  { top: '45%', left: '76%', width: '24%', height: '30%' },
-  { top: '75%', left: '76%', width: '24%', height: '25%' },
-];
-
-const LAYOUT = window.innerWidth > window.innerHeight ? LAYOUT_LANDSCAPE : LAYOUT_PORTRAIT;
-
-// Oblicz kolejność staggowania od środka na zewnątrz
-function computeStaggerOrder(layout) {
-  const cx = 50, cy = 50;
-  const dists = layout.map((l, i) => {
-    const lx = parseFloat(l.left) + parseFloat(l.width)  / 2;
-    const ly = parseFloat(l.top)  + parseFloat(l.height) / 2;
-    return { i, d: Math.hypot(lx - cx, ly - cy) };
-  });
-  dists.sort((a, b) => a.d - b.d);
-  const order = new Array(layout.length);
-  dists.forEach(({ i }, rank) => { order[i] = rank; });
-  return order;
-}
-const STAGGER_ORDER = computeStaggerOrder(LAYOUT);
 
 // Grain texture via base64 SVG noise
 const _grainSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="200" height="200" filter="url(#n)" opacity="1"/></svg>';
@@ -1970,28 +1913,9 @@ function Preloader({ onDone }) {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
-    preloadImages([...IMAGES, LOGO]).then(() => setPhase('gallery'));
+    preloadImages([LOGO]).then(() => setPhase('logo'));
     return () => { document.body.style.overflow = ''; document.documentElement.style.overflow = ''; };
   }, []);
-
-  // Wszystkie kafle widoczne → pauza → fade
-  useEffect(() => {
-    if (phase !== 'gallery') return;
-    const t = setTimeout(() => setPhase('fade'), IMAGES.length * STAGGER * 1000 + 700);
-    return () => clearTimeout(t);
-  }, [phase]);
-
-  useEffect(() => {
-    if (phase !== 'fade') return;
-    const t = setTimeout(() => setPhase('void'), 380);
-    return () => clearTimeout(t);
-  }, [phase]);
-
-  useEffect(() => {
-    if (phase !== 'void') return;
-    const t = setTimeout(() => setPhase('logo'), 420);
-    return () => clearTimeout(t);
-  }, [phase]);
 
   useEffect(() => {
     if (phase !== 'logo') return;
@@ -2015,10 +1939,8 @@ function Preloader({ onDone }) {
 
   if (phase === 'preload') return null;
 
-  const showImages = phase === 'gallery' || phase === 'fade';
-  const isFading   = phase === 'fade';
-  const showLogo   = phase === 'logo';
-  const isExiting  = phase === 'exit';
+  const showLogo  = phase === 'logo';
+  const isExiting = phase === 'exit';
 
   return html`
     <${AnimatePresence} onExitComplete=${handleExitDone}>
@@ -2041,35 +1963,7 @@ function Preloader({ onDone }) {
             mixBlendMode: 'overlay',
           }} />
 
-          ${showImages && IMAGES.map((src, i) => html`
-            <${motion.img}
-              key=${src}
-              src=${src}
-              alt=""
-              initial=${{ opacity: 0, scale: 0.9 }}
-              animate=${{
-                opacity: isFading ? 0 : 1,
-                scale:   isFading ? 1.02 : 1,
-                transition: isFading
-                  ? { duration: 0.35, ease: 'easeOut' }
-                  : { duration: 0.7, ease: EASE, delay: STAGGER_ORDER[i] * STAGGER }
-              }}
-              style=${{
-                position: 'absolute',
-                top:       LAYOUT[i].top,
-                left:      LAYOUT[i].left,
-                width:     LAYOUT[i].width,
-                height:    LAYOUT[i].height,
-                objectFit: 'cover',
-                display:   'block',
-                pointerEvents: 'none',
-                zIndex: 2,
-                background: BG,
-              }}
-            />
-          `)}
-
-          <${AnimatePresence}>
+<${AnimatePresence}>
             ${showLogo && html`
               <${motion.div}
                 key="logo"
