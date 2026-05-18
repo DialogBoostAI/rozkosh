@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rozkosh — Cukiernia & Kawiarnia, Rzeszów</title>
   <style id="preloader-cover">html{background:#306048}body{visibility:hidden}#preloader-root,#bee{visibility:visible}</style>
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap">
@@ -33,7 +34,7 @@
       --radius: 14px;
     }
 
-    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    html { scroll-padding-top: 80px; }
 
     * { user-select: none; -webkit-user-select: none; }
     img { -webkit-user-drag: none; }
@@ -1698,11 +1699,36 @@ if (touch) {
   })();
 }
 
+/* ===== LENIS SMOOTH SCROLL ===== */
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smoothWheel: true,
+  wheelMultiplier: 0.9,
+  touchMultiplier: 1.5,
+});
+
+function lenisRaf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(lenisRaf);
+}
+requestAnimationFrame(lenisRaf);
+
+// Anchor links — Lenis scrollTo z offset navbara
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    lenis.scrollTo(target, { offset: -80, duration: 1.4 });
+  });
+});
+
 /* ===== NAVBAR ===== */
 const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', scrollY > 10);
-}, { passive: true });
+lenis.on('scroll', ({ scroll }) => {
+  navbar.classList.toggle('scrolled', scroll > 10);
+});
 
 /* ===== MOBILE NAV ===== */
 const burger     = document.getElementById('burger');
@@ -1710,12 +1736,12 @@ const navOverlay = document.getElementById('navOverlay');
 
 burger.addEventListener('click', () => {
   navOverlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
+  lenis.stop();
 });
 
 function closeNav() {
   navOverlay.classList.remove('open');
-  document.body.style.overflow = '';
+  lenis.start();
 }
 
 /* ===== HERO BG ZOOM ===== */
@@ -1828,6 +1854,7 @@ function lbOpen(i, dir) {
     lbIndex = idx;
     img.src = lbItems[lbIndex];
     lb.classList.add('open');
+    lenis.stop();
     return;
   }
 
@@ -1856,6 +1883,7 @@ function lbOpen(i, dir) {
 
 function lbClose() {
   document.getElementById('lightbox').classList.remove('open');
+  lenis.start();
 }
 document.getElementById('lbClose').addEventListener('click', lbClose);
 document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); lbOpen(lbIndex - 1, 'prev'); });
